@@ -86,3 +86,6 @@ hs_err_pid*
 
 # Ignore temp files.
 *~
+
+# JNI generated headers
+jni/include
