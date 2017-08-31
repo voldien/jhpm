@@ -1,0 +1,57 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.4.3)
+
+# Requires JNI module.
+FIND_PACKAGE(JNI REQUIRED)
+
+# Build shared/dynamic library option
+OPTION(BUILD_SHARED_LIBS "Build package with shared libraries." ON)
+IF(NOT BUILD_SHARED_LIBS)
+	SET(CMAKE_EXE_LINKER_FLAGS "-static")
+	SET(LINK_SEARCH_START_STATIC TRUE)
+ENDIF()
+
+# gcc compiler options.
+IF((CMAKE_COMPILER_IS_GNUCC) AND NOT CMAKE_COMPILER_IS_MINGOW)
+	IF(BUILD_SHARED_LIBS AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+		ADD_DEFINITIONS(-fPIC)
+		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+	ENDIF()
+
+	# Compiling language standard.
+	ADD_DEFINITIONS(-std=c11)
+	ADD_DEFINITIONS(-w)
+	ADD_DEFINITIONS(-I${JNI_INCLUDE_DIRS})
+	ADD_DEFINITIONS(-I${JAVA_INCLUDE_PATH})
+	ADD_DEFINITIONS(-I${JAVA_INCLUDE_PATH2})
+	ADD_DEFINITIONS(-Wl,--add-stdcall-alias)
+
+	# Check build target.
+	IF (CMAKE_BUILD_TYPE STREQUAL "Release")
+		MESSAGE(STATUS "Compile for release.")
+		ADD_DEFINITIONS(-DNDEBUG -O2)
+		SET(CMAKE_RELEASE TRUE)
+	ELSEIF( CMAKE_BUILD_TYPE STREQUAL "Debug")
+		MESSAGE(STATUS "Compile for debug.")
+		ADD_DEFINITIONS(-D_DEBUG)
+		ADD_DEFINITIONS(-g3)
+		SET(CMAKE_DEBUG TRUE)
+	ENDIF()
+
+ELSEIF(MSVC)
+
+	# Enable multi-core complication with MSVC
+	ADD_DEFINITIONS(/MP)
+ENDIF()
+
+# Source files.
+FILE (GLOB headers "include/*.h")
+FILE (GLOB jnisrc src/*.c )
+
+# Add library targets and linking targets
+ADD_LIBRARY(hpmjni ${jnisrc})
+TARGET_LINK_LIBRARIES(hpmjni -lhpm ${JNI_LIBRARIES} )
+SET_TARGET_PROPERTIES(hpmjni PROPERTIES COMPILE_FLAGS "-Iinclude" )
+
+# Install hpmjni to system.
+INSTALL(TARGETS hpmjni DESTINATION lib)
+
