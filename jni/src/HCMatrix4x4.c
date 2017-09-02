@@ -58,20 +58,44 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix4x4_determinant
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_inverse
   (JNIEnv * env, jobject o){
+
+	/**/
 	jobject c = hpmjni_create_clone(env, o);
 
+	/**/
 	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
+	jfloatArray arrinv = (*env)->GetFloatArrayElements(env, arr, NULL);
 	float_t* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	float_t* einv = (*env)->GetFloatArrayElements(env, arrinv, NULL);
 
-	hpm_mat4x4_inversefv(NULL, env);
+	/*	*/
+	hpm_mat4x4_inversefv(e, einv);
 
+	/*	*/
 	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	(*env)->ReleaseFloatArrayElements(env, arrinv, einv, 0);
+
+	/*	*/
 	return c;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_transpose
   (JNIEnv * env, jobject o){
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	/**/
+	jobject c = hpmjni_create_clone(env, o);
+
+	/**/
+	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
+	float_t* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+
+	/*	*/
+	hpm_mat4x4_transposefv(e);
+
+	/*	*/
+	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+
+	/**/
+	return c;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_get__I
@@ -82,12 +106,16 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_get__I
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix4x4_get__II
   (JNIEnv *env, jobject o, jint i, jint j){
 
+	/*	*/
 	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
 
+	/*	*/
 	jfloat* f = (jfloat*)(*env)->GetFloatArrayElements(env, arr, NULL);
 
+	/*	*/
 	jfloat val = f[i * 4 + j];
 
+	/*	*/
 	(*env)->ReleaseFloatArrayElements(env, arr, f, 0);
 	return val;
 }
@@ -183,7 +211,21 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_rotate__Lhpmjni_Quaternion_2
 	/*	Create default instance of the object.	*/
 	jobject o = hpmjni_create_object_instance(env, c);
 
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	/*	*/
+	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
+	jfloatArray arrquat = hpmjni_get_float_array_reference(env, o);
+	float_t* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	float_t* equat = (*env)->GetFloatArrayElements(env, arrquat, NULL);
+
+	/*	*/
+	hpm_mat4x4_rotationQf(e, equat);
+
+	/*	*/
+	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	(*env)->ReleaseFloatArrayElements(env, arrquat, equat, 0);
+
+	/*	*/
+	return c;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_scale__FFF
