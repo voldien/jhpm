@@ -271,8 +271,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_identity
   (JNIEnv *env, jclass c){
 
 	/*	*/
-	jmethodID constructor = (*env)->GetMethodID(env, c, "<init>", "()V");
-	jobject o = (*env)->NewObject(env, c, constructor);
+	jobject o = hpmjni_create_object_instance(env, c);
 
 	/*	*/
 	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
