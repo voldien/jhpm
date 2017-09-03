@@ -19,6 +19,74 @@
 #include"org_jhpm_Quaternion.h"
 #include<hpm/hpm.h>
 
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_x
+  (JNIEnv *env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_y
+  (JNIEnv *env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_z
+  (JNIEnv *env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_w
+  (JNIEnv *env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setW
+  (JNIEnv *env, jobject o, jfloat w){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setX
+  (JNIEnv *env, jobject o, jfloat x){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setY
+  (JNIEnv *env, jobject o, jfloat y){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setZ
+  (JNIEnv *env, jobject o, jfloat z){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_set
+  (JNIEnv *env, jobject o, jfloat w, jfloat x, jfloat y, jfloat z){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+
+
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_magnitude
+  (JNIEnv* env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_magnitudeSquared
+  (JNIEnv* env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_dot
+  (JNIEnv* env, jobject o, jobject q1, jobject q2){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_makeUnitQuaternion
+  (JNIEnv* env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_normalize
+  (JNIEnv* env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_conjugate
+  (JNIEnv* env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_inverse
+  (JNIEnv* env, jobject o){
+	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+}
+
+
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getPitch
   (JNIEnv *env, jobject o){
