@@ -6,7 +6,7 @@ The project consists of declared java classes and the JNI code for implementatio
 
 # Motivation #
 ----
-The project was created in order create Java interface library for utilizing the hpm library. Where the hpm ( high performance matrices) library uses the most approiated SIMD extension available on the system, in order to increase the performance per math operation. See more details at [https://github.com/voldien/hpm](hpm).
+The project was created in order create Java interface library for utilizing the hpm library. Where the hpm ( high performance matrices) library uses the most approiated SIMD extension available on the system, in order to increase the performance per math operation. See more details at [hpm](https://github.com/voldien/hpm).
 
 # Installation #
 ----
@@ -21,7 +21,7 @@ make install
 
 # Contributing #
 
-Please read the [CONTRIBUTING.md](CONTRIBUTING) for more details of how you can contriubute.
+Please read the [CONTRIBUTING](CONTRIBUTING.md) for more details of how you can contriubute.
 
 ## License ##
 
