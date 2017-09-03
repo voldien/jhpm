@@ -21,16 +21,30 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
+ * Quaternion class responsible for
+ * representing a 3D orientation with
+ * help of a 4D vector.
+ *
  * @author Valdemar Lindberg
  */
 public class Quaternion {
 
     private float e[];
 
+    /**
+     *
+     */
     public Quaternion() {
         e = new float[4];
     }
 
+    /**
+     *
+     * @param w
+     * @param x
+     * @param y
+     * @param z
+     */
     public Quaternion(float w, float x, float y, float z) {
         e = new float[4];
         set(w, x, y, z);
@@ -262,13 +276,16 @@ public class Quaternion {
     public native float get(int index);
 
     /**
+     * Add quaternion with another quaternion
+     * component wise.
      * @param q
      * @return
      */
     public native Quaternion add(Quaternion q);
 
     /**
-     * Subtract quaternion with quaternion per component.
+     * Subtract quaternion with another quaternion
+     * component wise.
      * @param q
      * @return
      */
@@ -283,10 +300,10 @@ public class Quaternion {
 
     /**
      * Multiply quaternion with vector.
-     * @param q
+     * @param v
      * @return
      */
-    public native Quaternion mul(Vector3 q);
+    public native Quaternion mul(Vector3 v);
 
     /**
      * Multiply quaternion with scalar.

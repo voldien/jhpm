@@ -40,13 +40,13 @@ public class Matrix4x4 {
 
 	/**
 	 * Check if matrix is an identity matrix.
-	 * @return
+	 * @return true if an identity matrix.
 	 */
 	public native boolean isIdentity();
 
 	/**
 	 * Compute determinant of the matrix.
-	 * @return
+	 * @return determine of the matrix.
 	 */
 	public native float determinant();
 
@@ -64,17 +64,17 @@ public class Matrix4x4 {
 	public native Matrix4x4 transpose();
 
 	/**
-	 * Get element by index.
-	 * @param index.
+	 * Get vector4 element by index.
+	 * @param index of nth column.
 	 * @return nth column.
 	 */
 	public native Vector4 get(int index);
 	
 	/**
-	 * 
+	 * Get real value element by index.
 	 * @param i
 	 * @param j
-	 * @return
+	 * @return value at index.
 	 */
 	public native float get(int i, int j);
 
@@ -112,7 +112,8 @@ public class Matrix4x4 {
 	public native Vector4 mul(final Vector4 f1);
 
 	/**
-	 * 
+	 * Create clone object of matrix4x4.
+	 * @Return clone object.
 	 */
 	@Override
 	protected native Object clone();
@@ -120,12 +121,14 @@ public class Matrix4x4 {
 	/**
 	 * Compare two matrices and check
 	 * if equal
+	 * @Return true if object equal by each value.
 	 */
 	@Override
 	public native boolean equals(Object obj);
 	
 	/**
-	 * 
+	 * Compute the hash code.
+	 * @Return true.
 	 */
 	@Override
 	public int hashCode() {

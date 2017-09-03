@@ -38,7 +38,6 @@ public class Vector4 {
     }
 
     /**
-     *
      * @param val
      */
     public Vector4(float val) {
@@ -46,7 +45,6 @@ public class Vector4 {
     }
 
     /**
-     *
      * @param x
      * @param y
      * @param z
@@ -57,7 +55,6 @@ public class Vector4 {
     }
 
     /**
-     *
      * @return
      */
     public static native Vector4 unitVector3(Vector4 v);
@@ -172,43 +169,36 @@ public class Vector4 {
     public native float minComponent();
 
     /**
-     *
      * @return
      */
     public native float maxComponent();
 
     /**
-     *
      * @return
      */
     public native float maxAbsComponent();
 
     /**
-     *
      * @return
      */
     public native float minAbsComponent();
 
     /**
-     *
      * @return
      */
     public native int indexOfMinComponent();
 
     /**
-     *
      * @return
      */
     public native int indexOfMaxComponent();
 
     /**
-     *
      * @return
      */
     public native int indexOfMinAbsComponent();
 
     /**
-     *
      * @return
      */
     public native int indexOfMaxAbsComponent();

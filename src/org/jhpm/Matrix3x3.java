@@ -23,6 +23,7 @@ import java.util.Objects;
 /**
  * Matrix3x3, contains three rows for which
  * each contains four elements.
+ *
  * @author Valdemar Lindberg
  */
 public class Matrix3x3 {
@@ -41,18 +42,17 @@ public class Matrix3x3 {
 
     /**
      * Calculate the determinant.
+     *
      * @return
      */
     public native float determinant();
 
     /**
-     *
      * @return
      */
     public native Matrix3x3 inverse();
 
     /**
-     *
      * @return
      */
     public native boolean isIdentity();
@@ -63,20 +63,17 @@ public class Matrix3x3 {
     public native void identity();
 
     /**
-     *
      * @return
      */
     public native Matrix3x3 transpose();
 
     /**
-     *
      * @param index
      * @return
      */
     public native Vector3 get(int index);
 
     /**
-     *
      * @param i
      * @param j
      * @return
@@ -84,41 +81,37 @@ public class Matrix3x3 {
     public native float get(int i, int j);
 
     /**
-     *
      * @param v1
      * @return
      */
     public native Matrix3x3 add(Matrix3x3 v1);
 
     /**
-     *
      * @param v1
      * @return
      */
     public native Matrix4x4 sub(Matrix3x3 v1);
 
     /**
-     *
      * @param v1
      * @return
      */
     public native Matrix3x3 mul(Matrix3x3 f1);
 
     /**
-     *
      * @param v1
      * @return
      */
     public native Vector3 mul(final Vector3 f1);
 
     /**
-     *    @return
+     * @return
      */
     @Override
     public native boolean equals(Object obj);
 
     /**
-     *
+     * @Return
      */
     @Override
     public int hashCode() {
