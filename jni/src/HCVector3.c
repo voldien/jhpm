@@ -49,6 +49,11 @@ JNIEXPORT void JNICALL Java_org_jhpm_Vector3_setZ
 	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
 }
 
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_negate
+  (JNIEnv *env, jobject o){
+
+}
+
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_length
   (JNIEnv *env, jobject o){
 	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
@@ -118,3 +123,18 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_slerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat f){
 	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
 }
+
+
+JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector3_equals
+  (JNIEnv *env, jobject o1, jobject o2){
+
+}
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_clone
+  (JNIEnv *env, jobject o){
+
+}
+JNIEXPORT jstring JNICALL Java_org_jhpm_Vector3_toString
+  (JNIEnv *env, jobject o){
+
+}
+
