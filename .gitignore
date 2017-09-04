@@ -89,3 +89,6 @@ hs_err_pid*
 
 # JNI generated headers
 jni/include
+
+# ignore java idea directory. 
+.idea
