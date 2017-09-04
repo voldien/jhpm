@@ -20,6 +20,7 @@ package org.jhpm;
 /**
  * Class responsible for initializing the
  * hpm library.
+ *
  * @author Valdemar Lindberg
  */
 public class Hpm {
@@ -54,13 +55,15 @@ public class Hpm {
 
     /**
      * Initialize hpm library.
+     *
      * @param simd SIMD extension for which will be loaded into memory.
      * @return status of initialization.
      */
     public static native int init(SIMD simd);
 
     /**
-     *	Load hpmjni library.
+     * Load hpmjni library. This is required in order
+     * for the wrapper library to work.
      */
     static {
         /* Load native library at runtime	*/

@@ -330,6 +330,7 @@ public class Quaternion {
 
     /**
      * Compute the hash of quaternion object.
+     * @Return
      */
     @Override
     public int hashCode() {

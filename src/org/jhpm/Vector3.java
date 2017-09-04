@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- *
  * @author Valdemar Lindberg
  */
 public class Vector3 {
@@ -59,15 +58,18 @@ public class Vector3 {
     }
 
     /**
+     * Compute unit vector.
      * @param v
-     * @return
+     * @return normalized vector.
      */
     public native static Vector3 unitVector3(final Vector3 v);
 
     /**
+     * Compute the minimum component pair wise
+     * with vector v1 and v2.
      * @param v1
      * @param v2
-     * @return
+     * @return vector with minimum value for each component.
      */
     public native static Vector3 minVec(final Vector3 v1, final Vector3 v2);
 
@@ -79,35 +81,42 @@ public class Vector3 {
     public native static Vector3 maxVec(final Vector3 v1, final Vector3 v2);
 
     /**
+     * Compute the cross product of vector v1 and v2.
+     * Where the order of vector will yield different
+     * result.
      * @param v1
      * @param v2
-     * @return
+     * @return cross product vector.
      */
     public native static Vector3 cross(final Vector3 v1, final Vector3 v2);
 
     /**
-     * @param v1
-     * @param normal
-     * @return
+     * Compute the reflection vector.
+     * @param v1 incoming vector.
+     * @param normal normalized vector.
+     * @return reflection vector.
      */
     public native static Vector3 reflection(final Vector3 v1, final Vector3 normal);
 
     /**
-     * @param v1
-     * @param normal
-     * @param refraction
-     * @return
+     * Compute the refraction vector.
+     * @param v1 incoming vector.
+     * @param normal normalized vector.
+     * @param index refraction index.
+     * @return refraction vector.
      */
-    public native static Vector3 refraction(final Vector3 v1, final Vector3 normal, float refraction);
+    public native static Vector3 refraction(final Vector3 v1, final Vector3 normal, float index);
 
     /**
+     * Compute the dot product of vector v1 and v2.
      * @param v1
      * @param v2
-     * @return
+     * @return the angle between v1 and v2 time the length of v1 and v2.
      */
     public native static float dot(final Vector3 v1, final Vector3 v2);
 
     /**
+     * Comput the triple product (v1 x v2) * v3
      * @param v1
      * @param v2
      * @param v3
@@ -116,12 +125,14 @@ public class Vector3 {
     public native static float tripleProduct(final Vector3 v1, final Vector3 v2, final Vector3 v3);
 
     /**
+     * Compute the tangent vector.
      * @param normal
      * @return
      */
     public native static Vector3 tangent(final Vector3 normal);
 
     /**
+     * Compute the bi tangent vector.
      * @param normal
      * @param tangent
      * @return
@@ -129,6 +140,7 @@ public class Vector3 {
     public native static Vector3 biTangent(final Vector3 normal, final Vector3 tangent);
 
     /**
+     * Compute the bi normal.
      * @param normal
      * @param tangent
      * @return
@@ -136,32 +148,57 @@ public class Vector3 {
     public native static Vector3 biNormal(final Vector3 normal, final Vector3 tangent);
 
     /**
+     * Get normalized forward vector.
      * @return
      */
     public static Vector3 forward() {
         return new Vector3(0.0f, 0.0f, 1.0f);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Vector3 back() {
         return new Vector3(0.0f, 0.0f, -1.0f);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Vector3 right() {
         return new Vector3(1.0f, 0.0f, 0.0f);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Vector3 left() {
         return new Vector3(-1.0f, 0.0f, 0.0f);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Vector3 up() {
         return new Vector3(0.0f, 1.0f, 0.0f);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Vector3 down() {
         return new Vector3(0.0f, -1.0f, 0.0f);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Vector3 zero() {
         return new Vector3(0.0f, 0.0f, 0.0f);
     }
@@ -239,13 +276,14 @@ public class Vector3 {
     public native Vector3 negate();
 
     /**
-     * @param index
-     * @return
+     * Get component by its index.
+     * @param index nth element in the vector.
+     * @return value of the component.
      */
     public native float get(int index);
 
     /**
-     * Comput the length of the vector.
+     * Compute the length of the vector.
      *
      * @return non-negative number.
      */
@@ -293,18 +331,43 @@ public class Vector3 {
      */
     public native Vector3 add(final Vector3 v1);
 
+    /**
+     *
+     * @param v1
+     * @return
+     */
     public native Vector3 sub(final Vector3 v1);
-
-    public native Vector3 div(final Vector3 v1);
-
-    public native Vector3 div(final float f);
-
-    public native Vector3 mul(final Vector3 v1);
-
-    public native Vector3 mul(final float f);
 
     /**
      *
+     * @param v1
+     * @return
+     */
+    public native Vector3 div(final Vector3 v1);
+
+    /**
+     *
+     * @param f
+     * @return
+     */
+    public native Vector3 div(final float f);
+
+    /**
+     *
+     * @param v1
+     * @return
+     */
+    public native Vector3 mul(final Vector3 v1);
+
+    /**
+     *
+     * @param f
+     * @return
+     */
+    public native Vector3 mul(final float f);
+
+    /**
+     * Compare if object equal.
      */
     @Override
     public native boolean equals(Object obj);
@@ -318,13 +381,14 @@ public class Vector3 {
     }
 
     /**
-     *
+     * Create clone object.
      */
     @Override
     protected native Object clone();
 
     /**
-     *
+     * Convert to readable string format.
+     * @return non-null terminated string.
      */
     @Override
     public native String toString();

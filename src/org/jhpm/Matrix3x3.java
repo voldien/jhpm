@@ -125,7 +125,7 @@ public class Matrix3x3 {
     protected native Object clone();
 
     /**
-     *
+     * @return non-null terminated string.
      */
     @Override
     public native String toString();

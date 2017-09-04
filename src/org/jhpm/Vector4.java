@@ -263,13 +263,15 @@ public class Vector4 {
     }
 
     /**
-     *
+     * Convert to readable string format.
+     * @return non-null terminated string.
      */
     @Override
     public native String toString();
 
     /**
-     * @return
+     * Create clone object.
+     * @return non-null object.
      */
     @Override
     protected native Object clone();

@@ -38,110 +38,6 @@ public class Matrix4x4 {
 		this.e = new float[16];
 	}
 
-	/**
-	 * Check if matrix is an identity matrix.
-	 * @return true if an identity matrix.
-	 */
-	public native boolean isIdentity();
-
-	/**
-	 * Compute determinant of the matrix.
-	 * @return determine of the matrix.
-	 */
-	public native float determinant();
-
-	/**
-	 * Compute the inverse vector
-	 * if possible.
-	 * @return inversed matrix.
-	 */
-	public native Matrix4x4 inverse();
-
-	/**
-	 * Transpose matrix.
-	 * @return transposed matrix.
-	 */
-	public native Matrix4x4 transpose();
-
-	/**
-	 * Get vector4 element by index.
-	 * @param index of nth column.
-	 * @return nth column.
-	 */
-	public native Vector4 get(int index);
-	
-	/**
-	 * Get real value element by index.
-	 * @param i
-	 * @param j
-	 * @return value at index.
-	 */
-	public native float get(int i, int j);
-
-	/**
-	 * Add matrix.
-	 * @param v1
-	 * @return
-	 */
-	public native Matrix4x4 add(final Matrix4x4 v1);
-	/**
-	 * 
-	 * @param v1
-	 * @return
-	 */
-	public native Matrix4x4 sub(final Matrix4x4 v1);
-	/**
-	 * 
-	 * @param f1
-	 * @return
-	 */
-	public native Matrix4x4 mul(Matrix4x4 f1);
-	
-	/**
-	 * 
-	 * @param f
-	 * @return
-	 */
-	public native Matrix4x4 mul(float f);
-	
-	/**
-	 * 
-	 * @param f1
-	 * @return
-	 */
-	public native Vector4 mul(final Vector4 f1);
-
-	/**
-	 * Create clone object of matrix4x4.
-	 * @Return clone object.
-	 */
-	@Override
-	protected native Object clone();
-
-	/**
-	 * Compare two matrices and check
-	 * if equal
-	 * @Return true if object equal by each value.
-	 */
-	@Override
-	public native boolean equals(Object obj);
-	
-	/**
-	 * Compute the hash code.
-	 * @Return true.
-	 */
-	@Override
-	public int hashCode() {
-		return Objects.hash(Arrays.hashCode(e));
-	}
-
-	/**
-	 * Convert matrix to string.
-	 * @Return
-	 */
-	@Override
-	public native String toString();
-	
 	 /**
 	  *	Create translation matrix.
 	  * @param x position in X axis.
@@ -178,7 +74,7 @@ public class Matrix4x4 {
 	 *	@return scale matrix.
 	 */
 	public native static Matrix4x4 scale(float x, float y, float z);
-
+	
 	/**
 	 * Create scale matrix.
 	 * @param scale
@@ -190,7 +86,7 @@ public class Matrix4x4 {
 	 * Create perspective matrix.
 	 * @param fov angle in radius
 	 * @param aspect image view ratio.
-	 * @param near 
+	 * @param near
 	 * @param far
 	 * @return perspective matrix.
 	 */
@@ -221,17 +117,123 @@ public class Matrix4x4 {
 	 */
 	public native static Matrix4x4 orth(float left, float right, float bottom, float top,
 			float near, float far);
-
+	
 	/**
 	 *	Create bias matrix.
 	 * @return
 	 */
 	public native static Matrix4x4 biasMatrix();
-
+	
 	/**
 	 * Create identity matrix.
-	 * @return identity matrix. 
+	 * @return identity matrix.
 	 */
 	public native static Matrix4x4 identity();
+
+	/**
+	 * Check if matrix is an identity matrix.
+	 * @return true if an identity matrix.
+	 */
+	public native boolean isIdentity();
+
+	/**
+	 * Compute determinant of the matrix.
+	 * @return determine of the matrix.
+	 */
+	public native float determinant();
+	
+	/**
+	 * Compute the inverse vector
+	 * if possible.
+	 * @return inversed matrix.
+	 */
+	public native Matrix4x4 inverse();
+
+	/**
+	 * Transpose matrix.
+	 * @return transposed matrix.
+	 */
+	public native Matrix4x4 transpose();
+	
+	/**
+	 * Get vector4 element by index.
+	 * @param index of nth column.
+	 * @return nth column.
+	 */
+	public native Vector4 get(int index);
+
+	/**
+	 * Get real value element by index.
+	 * @param i
+	 * @param j
+	 * @return value at index.
+	 */
+	public native float get(int i, int j);
+
+	/**
+	 * Add matrix.
+	 * @param v1
+	 * @return
+	 */
+	public native Matrix4x4 add(final Matrix4x4 v1);
+
+	/**
+	 *
+	 * @param v1
+	 * @return
+	 */
+	public native Matrix4x4 sub(final Matrix4x4 v1);
+
+	/**
+	 *
+	 * @param f1
+	 * @return
+	 */
+	public native Matrix4x4 mul(Matrix4x4 f1);
+
+	/**
+	 *
+	 * @param f
+	 * @return
+	 */
+	public native Matrix4x4 mul(float f);
+
+	/**
+	 *
+	 * @param f1
+	 * @return
+	 */
+	public native Vector4 mul(final Vector4 f1);
+
+	/**
+	 * Create clone object of matrix4x4.
+	 * @Return clone object.
+	 */
+	@Override
+	protected native Object clone();
+
+	/**
+	 * Compare two matrices and check
+	 * if equal
+	 * @Return true if object equal by each value.
+	 */
+	@Override
+	public native boolean equals(Object obj);
+
+	/**
+	 * Compute the hash code.
+	 * @Return true.
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(Arrays.hashCode(e));
+	}
+
+	/**
+	 * Convert matrix to string.
+	 * @return non-null terminated string.
+	 */
+	@Override
+	public native String toString();
 
 }
