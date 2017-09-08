@@ -21,7 +21,7 @@ make install
 
 # Contributing #
 
-Please read the [CONTRIBUTING.md](CONTRIBUTING) for more details of how you can contriubute.
+Please read the [CONTRIBUTING](CONTRIBUTING.md) for more details of how you can contriubute.
 
 ## License ##
 
