@@ -19,6 +19,7 @@
 #ifndef _ORG_JHPM_HELPER_H_
 #define _ORG_JHPM_HELPER_H_ 1
 #include <jni.h>
+#include<assert.h>
 #include <hpm/hpm.h>
 
 /**
@@ -39,8 +40,25 @@ HPM_ALWAYS_INLINE jfloatArray hpmjni_get_float_array_reference(JNIEnv * env, job
 }
 
 /**
+ *	Get object float pointer.
+ *	@Return get float array data type.
+ */
+HPM_ALWAYS_INLINE jfloat* hpmjni_get_float_array_pointer_reference(JNIEnv * env, jobject objref, jfloatArray* array){
+
+	/**/
+	assert(objref && array);
+
+	/*	*/
+	*array = hpmjni_get_float_array_reference(env, objref);
+
+	/*	Get class type from object.	*/
+	return (*env)->GetFloatArrayElements(env, *array, NULL);
+}
+
+/**
  *	Create instance object of
  *	specified class type.
+ *
  *	@Return
  */
 HPM_ALWAYS_INLINE jobject hpmjni_create_object_instance(JNIEnv* env, jclass c){
@@ -57,7 +75,8 @@ HPM_ALWAYS_INLINE jobject hpmjni_create_object_instance(JNIEnv* env, jclass c){
 
 /**
  *	Create clone.
- *	@Return
+ *
+ *	@Return clone object.
  */
 HPM_ALWAYS_INLINE jobject hpmjni_create_clone(JNIEnv* env, jobject o){
 	jclass c = (*env)->GetObjectClass(env, o);
