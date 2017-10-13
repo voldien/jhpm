@@ -33,7 +33,7 @@ public class Vector3 {
      * instance.
      */
     Vector3() {
-        e = new float[3];
+        e = new float[4];
     }
 
     /**
@@ -222,42 +222,42 @@ public class Vector3 {
      *
      * @return value of x.
      */
-    public native float x();
+    public float x(){return this.e[0];}
 
     /**
      * Get Y component of the vector.
      *
      * @return value of y.
      */
-    public native float y();
+    public float y(){return this.e[1];}
 
     /**
      * Get Z component of the vector.
      *
      * @return value of z.
      */
-    public native float z();
+    public float z(){return this.e[2];}
 
     /**
      * Set x component of the vector.
      *
      * @param x
      */
-    public native void setX(float x);
+    public void setX(float x){e[0] = x;}
 
     /**
      * Set y component of the vector.
      *
      * @param y
      */
-    public native void setY(float y);
+    public void setY(float y){e[0] = y;}
 
     /**
      * Set Z component of the vector.
      *
      * @param z
      */
-    public native void setZ(float z);
+    public void setZ(float z){e[0] = z;}
 
     /**
      * Set all components of the vector.

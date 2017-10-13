@@ -129,45 +129,45 @@ public class Quaternion {
     /**
      * Get individual X component.
      */
-    public native float x();
+    public float x(){return e[1];}
 
     /**
      * Get individual Y component.
      * @return
      */
-    public native float y();
+    public float y(){return e[2];}
 
     /**
      * Get individual Z component.
      * @return
      */
-    public native float z();
+    public float z(){return e[3];}
 
     /**
      * Get individual W component.
      * @return
      */
-    public native float w();
+    public float w(){return e[1];}
 
     /**
      * Set individual W component.
      */
-    public native void setW(float w);
+    public void setW(float w){e[0] = w;}
 
     /**
      * Set individual X component.
      */
-    public native void setX(float x);
+    public void setX(float x){e[1] = x;}
 
     /**
      * Set individual Y component.
      */
-    public native void setY(float y);
+    public void setY(float y){e[2] = y;}
 
     /**
      * Set individual Z component.
      */
-    public native void setZ(float z);
+    public void setZ(float z){e[3] = z;}
 
     /**
      * Set the individual components in a single

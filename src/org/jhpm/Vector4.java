@@ -87,42 +87,42 @@ public class Vector4 {
     /**
      * @return Get component x of vector.
      */
-    public native float x();
+    public float x(){return e[0];}
 
     /**
      * @return Get component x of vector.
      */
-    public native float y();
+    public float y(){return e[1];}
 
     /**
      * @return Get component x of vector.
      */
-    public native float z();
+    public float z(){return e[2];}
 
     /**
      * @return Get component x of vector.
      */
-    public native float w();
+    public float w(){return e[3];}
 
     /**
      * @param x
      */
-    public native void setX(float x);
+    public void setX(float x){e[0] = x;}
 
     /**
      * @return Get component x of vector.
      */
-    public native void setY(float y);
+    public void setY(float y){e[1] = y;}
 
     /**
      * @return Get component x of vector.
      */
-    public native void setZ(float z);
+    public void setZ(float z){e[0] = z;}
 
     /**
      * @return Get component x of vector.
      */
-    public native void setW(float w);
+    public void setW(float w){e[0] = w;}
 
     /**
      * @param x
