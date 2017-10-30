@@ -62,6 +62,84 @@ HPM_ALWAYS_INLINE jfloat* hpmjni_get_float_array_pointer_reference(
 }
 
 /**
+ *	Get object float pointer.
+ *	@Return get float array pointer data.
+ */
+HPM_ALWAYS_INLINE void hpmjni_get_float_array_pointer_reference_a_b(
+        JNIEnv* __restrict__ env, jobject* __restrict__ objref,
+        jfloatArray** __restrict__ parray, jfloat** __restrict__ pfloat) {
+
+	const int n = 2;
+	int i;
+
+	/*	Requires non null object and array pointer.	*/
+	assert(objref && parray && pfloat);
+
+	/*	Get float pointer for each float array objects. */
+	for(i = 0; i < n; i++){
+		pfloat[i] = hpmjni_get_float_array_pointer_reference(env, objref[i], parray[i]);
+	}
+}
+
+/**
+ *	Get object float pointer.
+ *	@Return get float array pointer data.
+ */
+HPM_ALWAYS_INLINE void hpmjni_get_float_array_pointer_reference_a_b_c(
+        JNIEnv* __restrict__ env, jobject* __restrict__ objref,
+        jfloatArray** __restrict__ parray, jfloat** __restrict__ pfloat) {
+
+	const int n = 3;
+	int i;
+
+	/*	Requires non null object and array pointer.	*/
+	assert(objref && parray && pfloat);
+
+	/*	Get float pointer for each float array objects. */
+	for(i = 0; i < n; i++){
+		pfloat[i] = hpmjni_get_float_array_pointer_reference(env, objref[i], parray[i]);
+	}
+}
+
+/**
+ *	Get object float pointer.
+ *	@Return get float array pointer data.
+ */
+HPM_ALWAYS_INLINE void hpmjni_release_float_array_pointer_reference_a_b(
+        JNIEnv* __restrict__ env, jfloatArray** __restrict__ parray, jfloat** __restrict__ pfloat) {
+
+	const int n = 2;
+	int i;
+
+	/*	Requires non null object and array pointer.	*/
+	assert(parray && pfloat);
+
+	/*	Release all float array objects.    */
+	for(i = 0; i < n; i++){
+		(*env)->ReleaseFloatArrayElements(env, parray[i], pfloat[i], 0);
+	}
+}
+
+/**
+ *	Release float pointer array.
+ */
+HPM_ALWAYS_INLINE void hpmjni_release_float_array_pointer_reference_a_b_c(
+        JNIEnv* __restrict__ env, jfloatArray* __restrict__ parray,
+        jfloat** __restrict__ pfloat) {
+
+	const int n = 3;
+	int i;
+
+	/*	Requires non null object and array pointer.	*/
+	assert(parray && pfloat);
+
+	/*	Release each float array objects.    */
+	for(i = 0; i < n; i++){
+		(*env)->ReleaseFloatArrayElements(env, parray[i], pfloat[i], 0);
+	}
+}
+
+/**
  *	Create instance object of
  *	specified class type.
  *
