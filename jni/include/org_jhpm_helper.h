@@ -26,7 +26,11 @@
  *	Get object float pointer.
  *	@Return get float array data type.
  */
-HPM_ALWAYS_INLINE jfloatArray hpmjni_get_float_array_reference(JNIEnv * env, jobject objref){
+HPM_ALWAYS_INLINE jfloatArray hpmjni_get_float_array_reference(
+        JNIEnv* __restrict__ env, jobject __restrict__ objref) {
+
+	/*	Check if object reference is valid. */
+	assert(objref);
 
 	/*	Get class type from object.	*/
 	jclass cs = (*env)->GetObjectClass(env, objref);
@@ -35,20 +39,22 @@ HPM_ALWAYS_INLINE jfloatArray hpmjni_get_float_array_reference(JNIEnv * env, job
 	/*	Get float array reference object.	*/
 	jfloatArray arr = (*env)->GetObjectField(env, objref, field);
 
-	/*	*/
+	/*	return float array object.  */
 	return arr;
 }
 
 /**
  *	Get object float pointer.
- *	@Return get float array data type.
+ *	@Return get float array pointer data.
  */
-HPM_ALWAYS_INLINE jfloat* hpmjni_get_float_array_pointer_reference(JNIEnv * env, jobject objref, jfloatArray* array){
+HPM_ALWAYS_INLINE jfloat* hpmjni_get_float_array_pointer_reference(
+        JNIEnv* __restrict__ env, jobject __restrict__ objref,
+        jfloatArray* __restrict__ array) {
 
-	/**/
+	/*	Requires non null object and array pointer.	*/
 	assert(objref && array);
 
-	/*	*/
+	/*	Fetch float array object.	*/
 	*array = hpmjni_get_float_array_reference(env, objref);
 
 	/*	Get class type from object.	*/
@@ -61,7 +67,8 @@ HPM_ALWAYS_INLINE jfloat* hpmjni_get_float_array_pointer_reference(JNIEnv * env,
  *
  *	@Return
  */
-HPM_ALWAYS_INLINE jobject hpmjni_create_object_instance(JNIEnv* env, jclass c){
+HPM_ALWAYS_INLINE jobject hpmjni_create_object_instance(
+        JNIEnv* __restrict__ env, jclass __restrict__ c) {
 
 	/*	Get constructor method ID.	*/
 	jmethodID constructor = (*env)->GetMethodID(env, c, "<init>", "()V");
@@ -78,7 +85,8 @@ HPM_ALWAYS_INLINE jobject hpmjni_create_object_instance(JNIEnv* env, jclass c){
  *
  *	@Return clone object.
  */
-HPM_ALWAYS_INLINE jobject hpmjni_create_clone(JNIEnv* env, jobject o){
+HPM_ALWAYS_INLINE jobject hpmjni_create_clone(JNIEnv* __restrict__ env,
+        jobject __restrict__ o) {
 	jclass c = (*env)->GetObjectClass(env, o);
 
 	jmethodID mid = (*env)->GetMethodID(env, c, "<init>", "()V");
