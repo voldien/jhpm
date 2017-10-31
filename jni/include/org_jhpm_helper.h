@@ -82,6 +82,18 @@ HPM_ALWAYS_INLINE void hpmjni_get_float_array_pointer_reference_a_b(
 }
 
 /**
+ *	Release
+ */
+HPM_ALWAYS_INLINE void hpmjni_release_float_array_pointer_reference(
+        JNIEnv* __restrict__ env, const jfloatArray __restrict__ array,
+        const jfloat* __restrict__ fp) {
+
+	assert(array && fp);
+
+	(*env)->ReleaseFloatArrayElements(env, array, fp, 0);
+}
+
+/**
  *	Get object float pointer.
  *	@Return get float array pointer data.
  */
