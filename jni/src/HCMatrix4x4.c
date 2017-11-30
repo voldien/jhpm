@@ -17,6 +17,7 @@
 
 */
 #include"org_jhpm_Matrix4x4.h"
+#include"org_jhpm_helper.h"
 #include<hpm/hpm.h>
 #include<hpm/hpmmath.h>
 #include<assert.h>
@@ -26,40 +27,39 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Matrix4x4_isIdentity
 	const hpmvec4x4f_t id;
 
 	/*	Get memory pointer of c object.	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Create identity for comparing.	*/
-	hpm_mat4x4_identityfv(id);
+	hpm_mat4x4_identityfv((hpmvec4f*)id);
 
 	/*	Performance compare.	*/
-	jboolean status = hpm_mat4_eqfv(e, id);
+	jboolean status = hpm_mat4_eqfv((const hpmvec4f*)e, (const hpmvec4f*)id);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return status;
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix4x4_determinant
   (JNIEnv * env, jobject o){
 
-	/*	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	/*	Get memory pointer of c object.	*/
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
-	/*	*/
-	jfloat det = hpm_mat4x4_determinantfv(e);
+	/*	Compute the determine of the matrix.	*/
+	jfloat det = hpm_mat4x4_determinantfv((const hpmvec4f*)e);
 
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return det;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_inverse
   (JNIEnv * env, jobject o){
 
-	/**/
+	/*	Create clone object.	*/
 	jobject c = hpmjni_create_clone(env, o);
 
 	/**/
@@ -81,32 +81,31 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_inverse
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_transpose
   (JNIEnv * env, jobject o){
-	/**/
+
+	/*	Create clone object.	*/
+	jfloatArray arr;
 	jobject c = hpmjni_create_clone(env, o);
+	/*	Get memory pointer of c object.	*/
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
-	/**/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	float_t* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	hpm_mat4x4_transposefv((hpmvec4f*)e);
 
-	/*	*/
-	hpm_mat4x4_transposefv(e);
-
-	/*	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
-	/**/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return c;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_get__I
   (JNIEnv *env, jobject o, jint i){
+
+	jobject co = hpmjni_create_object_instance(env, NULL);
+
 	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix4x4_get__II
   (JNIEnv *env, jobject o, jint i, jint j){
 
-	/*	*/
+	/*	Get memory pointer of c object.	*/
 	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
 
 	/*	*/
@@ -122,12 +121,45 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix4x4_get__II
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_add
   (JNIEnv *env, jobject o1, jobject o2){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+
+	jobject objs[3] = {o1, o2, NULL};
+	jfloatArray arry[3];
+	jfloat* eo[3];
+
+	/*	Create copy instance.	*/
+	objs[2] = hpmjni_create_clone(env, o1);
+
+	/*	*/
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
+
+	/*	*/
+	hpm_mat4x4_additition_mat4x4fv(eo[0], eo[1], eo[2]);
+
+	/*	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
+
+	return objs[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_sub
   (JNIEnv *env, jobject o1, jobject o2){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	jobject objs[3] = {o1, o2, NULL};
+	jfloatArray arry[3];
+	jfloat* eo[3];
+
+	/*	Create copy instance.	*/
+	objs[2] = hpmjni_create_clone(env, o1);
+
+	/*	*/
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
+
+	/*	*/
+	hpm_mat4x4_subraction_mat4x4fv(eo[0], eo[1], eo[2]);
+
+	/*	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
+
+	return objs[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_mul__Lorg_jhpm_Matrix4x4_2
@@ -164,7 +196,7 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Matrix4x4_equals
 	jfloat* e1 = (jfloat*)(*env)->GetFloatArrayElements(env, arr1, NULL);
 	jfloat* e2 = (jfloat*)(*env)->GetFloatArrayElements(env, arr2, NULL);
 
-	hpmboolean status = hpm_mat4_eqfv(e1, e2);
+	hpmboolean status = hpm_mat4_eqfv((hpmvec4f*)e1, (hpmvec4f*)e2);
 
 	(*env)->ReleaseFloatArrayElements(env, arr1, e1, 0);
 	(*env)->ReleaseFloatArrayElements(env, arr2, e2, 0);
