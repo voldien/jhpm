@@ -25,6 +25,7 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
 
 	unsigned int simd;
 	jint status = 0;
+
 	/*	Get enum value.	*/
 	jclass enc = (*env)->GetObjectClass(env, o);
 	jfieldID fid = (*env)->GetFieldID(env, enc, "simd", "J");
