@@ -111,22 +111,22 @@ public class Vector2 {
     /**
      * @param x
      */
-    public native void setX(float x);
+    public void setX(float x){e[0] = x;}
 
     /**
-     * @param x
+     * @param y
      */
-    public native void setY(float y);
-
-    /**
-     * @return
-     */
-    public native float x();
+    public void setY(float y){e[1] = y;}
 
     /**
      * @return
      */
-    public native float y();
+    public float x(){return e[0];}
+
+    /**
+     * @return
+     */
+    public float y(){return e[1];}
 
     /**
      * @param x

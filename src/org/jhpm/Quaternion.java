@@ -118,7 +118,6 @@ public class Quaternion {
      */
     public static native Quaternion slerp(Quaternion from, Quaternion to,
                                           float speed);
-
     /**
      * Create identity quaternion.
      *
