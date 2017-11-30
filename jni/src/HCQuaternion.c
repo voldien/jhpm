@@ -17,62 +17,80 @@
 
 */
 #include"org_jhpm_Quaternion.h"
+#include"org_jhpm_helper.h"
 #include<hpm/hpm.h>
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_x
-  (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_y
-  (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_z
-  (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_w
-  (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setW
-  (JNIEnv *env, jobject o, jfloat w){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setX
-  (JNIEnv *env, jobject o, jfloat x){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setY
-  (JNIEnv *env, jobject o, jfloat y){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_setZ
-  (JNIEnv *env, jobject o, jfloat z){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
 JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_set
   (JNIEnv *env, jobject o, jfloat w, jfloat x, jfloat y, jfloat z){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
 
+	jfloatArray arr;
+	/*	Get memory pointer of c object.	*/
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	hpm_quat_setf((hpmquatf*)e, w, x, y, z);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+}
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_magnitude
   (JNIEnv* env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	jfloatArray arr;
+	/*	Get memory pointer of c object.	*/
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	jfloat length = hpm_quat_lengthfv((const hpmquatf*)e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+
+	return length;
 }
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_magnitudeSquared
   (JNIEnv* env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	jfloatArray arr;
+	/*	Get memory pointer of c object.	*/
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	jfloat length = hpm_quat_lengthsqurefv((const hpmquatf*)e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+
+	return length;
 }
+
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_dot
-  (JNIEnv* env, jobject o, jobject q1, jobject q2){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+  (JNIEnv* env, jobject o1, jobject q1, jobject q2){
+	jfloat innerproduct;
+
+	jobject o[2] = {q1, q2};
+	jfloatArray fa[2];
+	jfloat* p[2];
+
+	hpmjni_get_float_array_pointer_reference_a_b(env, o, fa, p);
+
+	/*	Compute dot product.	*/
+	innerproduct = hpm_quat_dotfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1]);
+
+	hpmjni_release_float_array_pointer_reference_a_b(env, fa, p);
+
+	return innerproduct;
 }
+
 JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_makeUnitQuaternion
   (JNIEnv* env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+    jfloatArray arr;
+    /*  */
+    jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+    /*  */
+    hpm_vec4_normalizefv((hpmvec4f*)e);
+
+    /*  */
+    hpmjni_release_float_array_pointer_reference(env, arr, e);
 }
+
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_normalize
   (JNIEnv* env, jobject o){
 	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
@@ -92,15 +110,16 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getPitch
   (JNIEnv *env, jobject o){
 	jfloat pitch;
 
+	jfloatArray arr;
+
 	/*	Get memory pointer of c object.	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute quaternion pitch angle in radius.	*/
-	pitch = hpm_quat_pitchfv(e);
+	pitch = hpm_quat_pitchfv((const hpmquatf*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return pitch;
 }
@@ -109,15 +128,16 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getYaw
   (JNIEnv *env, jobject o){
 	jfloat yaw;
 
+	jfloatArray arr;
+
 	/*	Get memory pointer of c object.	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute quaternion yaw angle radius.	*/
-	yaw = hpm_quat_yawfv(e);
+	yaw = hpm_quat_yawfv((const hpmquatf*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return yaw;
 }
@@ -126,15 +146,16 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getRoll
   (JNIEnv *env, jobject o){
 	jfloat roll;
 
+	jfloatArray arr;
+
 	/*	Get memory pointer of c object.	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute quaternion roll angle in radiuscd co.	*/
-	roll = hpm_quat_rollfv(e);
+	roll = hpm_quat_rollfv((const hpmquatf*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return roll;
 }
@@ -224,17 +245,19 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_slerp
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_identity
   (JNIEnv *env, jclass c){
 	jobject o;
+	jfloatArray arr;
 
 	/*	Get memory pointer of c object.	*/
 	o = hpmjni_create_object_instance(env, c);
 
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	/*	Get memory pointer of c object.	*/
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
-	hpm_quat_identityfv(e);
+	/*	Create identitiy.	*/
+	hpm_quat_identityfv((hpmquatf*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return o;
 }
