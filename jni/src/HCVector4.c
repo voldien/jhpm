@@ -17,6 +17,7 @@
 
 */
 #include"org_jhpm_Vector4.h"
+#include"org_jhpm_helper.h"
 #include<hpm/hpm.h>
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_x
@@ -24,39 +25,36 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_x
 	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
 }
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_y
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_length
   (JNIEnv *env, jobject o){
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+
+	/*	Get memory pointer of c object.	*/
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	/*	Compute the length.	*/
+	jfloat length = hpm_vec4_lengthfv((const hpmvec4f*)e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+
+	return length;
 }
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_z
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_squaredLength
   (JNIEnv *env, jobject o){
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_w
-  (JNIEnv *env, jobject o){
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
+	/*	Get memory pointer of c object.	*/
+	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
+	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
 
-JNIEXPORT void JNICALL Java_org_jhpm_Vector4_setX
-  (JNIEnv *env, jobject o, jfloat x){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
+	/*	Compute the length.	*/
+	jfloat length = hpm_vec4_lengthsqurefv((const hpmvec4f*)e);
 
-JNIEXPORT void JNICALL Java_org_jhpm_Vector4_setY
-  (JNIEnv *env, jobject o, jfloat y){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
+	/*	Release float array.	*/
+	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
 
-JNIEXPORT void JNICALL Java_org_jhpm_Vector4_setZ
-  (JNIEnv *env, jobject o, jfloat z){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
-
-JNIEXPORT void JNICALL Java_org_jhpm_Vector4_setW
-  (JNIEnv *env, jobject o, jfloat w){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	return length;
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_length
@@ -116,5 +114,120 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Vector4_indexOfMaxAbsComponent
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_normalize
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+
+    jfloatArray arr;
+    jobject co = Java_org_jhpm_Vector4_clone(env, o);
+
+    /*  */
+    jfloat* e = hpmjni_get_float_array_pointer_reference(env, co, &arr);
+
+    /*  */
+    hpm_vec4_normalizefv((hpmvec4f*)e);
+
+    /*  */
+    hpmjni_release_float_array_pointer_reference(env, arr, e);
+    return co;
 }
+
+
+JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector4_equals
+  (JNIEnv* env, jobject o1, jobject o2){
+
+	jfloatArray farr[2];
+	jobject objarr[2] = {o1, o2};
+	jfloat* eoarr[2];
+	jboolean eq;
+
+	/*	Fetch a and b float pointer objects.	*/
+	hpmjni_get_float_array_pointer_reference_a_b(env, objarr, farr, eoarr);
+
+	/*	Check equality.	*/
+	eq = hpm_vec4_eqfv(eoarr[0], eoarr[1]);
+
+	/*	Release pointer and float array object.	*/
+	hpmjni_release_float_array_pointer_reference_a_b(env, farr, eoarr);
+
+	return eq;
+}
+
+JNIEXPORT jstring JNICALL Java_org_jhpm_Vector4_toString(JNIEnv* env, jobject o) {
+
+    jfloatArray arr;
+    jchar text[128];
+    jsize slen;
+
+    /*  */
+    jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+    /*	*/
+    slen = sprintf((char*)text, "{ %.1f, %.1f, %.1f, %.1f }", e[0], e[1], e[2], e[3]);
+
+    /*	*/
+    hpmjni_release_float_array_pointer_reference(env, arr, e);
+
+    return (*env)->NewString(env, text, slen);
+}
+
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_clone(JNIEnv* env, jobject o) {
+
+	jobjectArray arr;
+	jobject co1 = hpmjni_create_clone(env, o);
+
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, co1, &arr);
+
+//    hpm_vec4_copyfv()
+
+	return co1;
+}
+
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_unitVector3
+  (JNIEnv* env, jclass c, jobject o){
+
+	jobject co = Java_org_jhpm_Vector4_clone(env, o);
+
+	return co;
+}
+
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_minVec
+  (JNIEnv* env, jclass c, jobject o1, jobject o2){
+
+	jobject o[3] = {o1, o2};
+	jfloatArray fa[3];
+	jfloat* p[3];
+
+	jobject co = hpmjni_create_object_instance(env, c);
+
+	return co;
+}
+
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_maxVec
+  (JNIEnv* env, jclass c, jobject o1, jobject o2){
+
+	jobject o[3] = {o1, o2};
+	jfloatArray fa[3];
+	jfloat* p[3];
+
+	jobject co = hpmjni_create_object_instance(env, c);
+
+	return co;
+
+}
+
+JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_dot
+  (JNIEnv* env, jclass c, jobject o1, jobject o2){
+	jfloat innerproduct;
+
+	jobject o[2] = {o1, o2};
+	jfloatArray fa[2];
+	jfloat* p[2];
+
+	hpmjni_get_float_array_pointer_reference_a_b(env, o, fa, p);
+
+	/*	Compute dot product.	*/
+	innerproduct = hpm_vec4_dotfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1]);
+
+	hpmjni_release_float_array_pointer_reference_a_b(env, fa, p);
+
+	return innerproduct;
+}
+
