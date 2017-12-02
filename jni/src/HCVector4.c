@@ -20,10 +20,6 @@
 #include"org_jhpm_helper.h"
 #include<hpm/hpm.h>
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_x
-  (JNIEnv *env, jobject o){
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_length
   (JNIEnv *env, jobject o){
@@ -57,19 +53,17 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_squaredLength
 	return length;
 }
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_length
-  (JNIEnv *env, jobject o){
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
+JNIEXPORT void JNICALL Java_org_jhpm_Vector4_makeUnitVector(JNIEnv* env, jobject o){
 
-JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_squaredLength
-  (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
-}
+	/*	Get memory pointer of c object.	*/
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
-JNIEXPORT void JNICALL Java_org_jhpm_Vector4_makeUnitVector
-  (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	/*	Compute the normalized vector.	*/
+	hpm_vec4_normalizefv((hpmvec4f*)e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_minComponent
@@ -195,9 +189,14 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_minVec
 	jfloatArray fa[3];
 	jfloat* p[3];
 
-	jobject co = hpmjni_create_object_instance(env, c);
+	o[2] = hpmjni_create_object_instance(env, c);
 
-	return co;
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, fa, p);
+
+	hpm_vec4_minfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], (hpmvec4f*)p[2]);
+
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, fa, p);
+	return p[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_maxVec
@@ -207,9 +206,14 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_maxVec
 	jfloatArray fa[3];
 	jfloat* p[3];
 
-	jobject co = hpmjni_create_object_instance(env, c);
+	o[2] = hpmjni_create_object_instance(env, c);
 
-	return co;
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, fa, p);
+
+	hpm_vec4_maxfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], (hpmvec4f*)p[2]);
+
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, fa, p);
+	return p[2];
 
 }
 
