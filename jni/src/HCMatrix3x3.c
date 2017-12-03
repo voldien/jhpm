@@ -17,11 +17,22 @@
 
 */
 #include"org_jhpm_Matrix3x3.h"
+#include"org_jhpm_helper.h"
 #include<hpm/hpm.h>
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix3x3_determinant
   (JNIEnv * env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+
+	jfloatArray arr;
+	/*	Get memory pointer of c object.	*/
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	/*	Compute the determine of the matrix.	*/
+	jfloat det = hpm_mat4x4_determinantfv(e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+	return det;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix3x3_inverse
@@ -43,3 +54,13 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix3x3_transpose
   (JNIEnv *env, jobject o){
 	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
 }
+
+JNIEXPORT jboolean JNICALL Java_org_jhpm_Matrix3x3_equals
+  (JNIEnv *env, jobject o1, jobject o2){}
+
+JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix3x3_clone
+  (JNIEnv *env, jobject o){}
+
+JNIEXPORT jstring JNICALL Java_org_jhpm_Matrix3x3_toString
+  (JNIEnv *env, jobject o){}
+

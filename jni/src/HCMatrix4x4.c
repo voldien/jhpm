@@ -62,20 +62,18 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_inverse
 	/*	Create clone object.	*/
 	jobject c = hpmjni_create_clone(env, o);
 
-	/**/
+	/*	Get memory pointer of c object.	*/
 	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
 	jfloatArray arrinv = (*env)->GetFloatArrayElements(env, arr, NULL);
 	float_t* e = (*env)->GetFloatArrayElements(env, arr, NULL);
 	float_t* einv = (*env)->GetFloatArrayElements(env, arrinv, NULL);
 
 	/*	*/
-	hpm_mat4x4_inversefv(e, einv);
+	hpm_mat4x4_inversefv((const hpmvec4f*)e, (hpmvec4f*)einv);
 
 	/*	*/
 	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
 	(*env)->ReleaseFloatArrayElements(env, arrinv, einv, 0);
-
-	/*	*/
 	return c;
 }
 
@@ -106,16 +104,13 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix4x4_get__II
   (JNIEnv *env, jobject o, jint i, jint j){
 
 	/*	Get memory pointer of c object.	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-
-	/*	*/
-	jfloat* f = (jfloat*)(*env)->GetFloatArrayElements(env, arr, NULL);
+	jfloatArray arr;
+	jfloat* f = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	*/
 	jfloat val = f[i * 4 + j];
 
-	/*	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, f, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, f);
 	return val;
 }
 
@@ -154,7 +149,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_sub
 	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
 
 	/*	*/
-	hpm_mat4x4_subraction_mat4x4fv(eo[0], eo[1], eo[2]);
+	hpm_mat4x4_subraction_mat4x4fv((hpmvec4f*)eo[0], (hpmvec4f*)eo[1], (hpmvec4f*)eo[2]);
 
 	/*	*/
 	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
@@ -281,12 +276,11 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_scale__Lhpmjni_Vector3_2
 	jobject o = hpmjni_create_object_instance(env, c);
 
 	/*	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, (jbyteArray)arr, NULL);
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
+	hpmjni_get_float_array_pointer_reference_a_b(env, arr, e);
 	return o;
 }
 
@@ -297,13 +291,12 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_perspective
 	jobject o = hpmjni_create_object_instance(env, c);
 
 	/*	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, (jbyteArray)arr, NULL);
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
-	hpm_mat4x4_projfv(e, angle, ratio, near, far);
+	hpm_mat4x4_projfv((hpmvec4f*)e, angle, ratio, near, far);
 
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
+	hpmjni_get_float_array_pointer_reference_a_b(env, arr, e);
 	return o;
 }
 
