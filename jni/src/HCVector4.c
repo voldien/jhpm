@@ -41,14 +41,14 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_squaredLength
   (JNIEnv *env, jobject o){
 
 	/*	Get memory pointer of c object.	*/
-	jfloatArray arr = hpmjni_get_float_array_reference(env, o);
-	jfloat* e = (*env)->GetFloatArrayElements(env, arr, NULL);
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute the length.	*/
 	jfloat length = hpm_vec4_lengthsqurefv((const hpmvec4f*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return length;
 }
@@ -68,42 +68,42 @@ JNIEXPORT void JNICALL Java_org_jhpm_Vector4_makeUnitVector(JNIEnv* env, jobject
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_minComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_maxComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_maxAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_minAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector4_indexOfMinComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector4_indexOfMaxComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector4_indexOfMinAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector4_indexOfMaxAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_normalize
@@ -179,6 +179,12 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_unitVector3
 
 	jobject co = Java_org_jhpm_Vector4_clone(env, o);
 
+	jobjectArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, co, &arr);
+
+	hpm_vec4_normalizefv((hpmvec4f*)e);
+
+    hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return co;
 }
 

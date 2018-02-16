@@ -33,9 +33,8 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
 
 	/*  Check if value is power of 2.   */
 	if(( simd && ((simd - 1) & simd) )){
-	    char *className = "java/lang/IllegalArgumentException";
-	    jclass illex = (*env)->FindClass(env, className);
-	    return (*env)->ThrowNew(env, illex, "Invalid SIMD argument");
+	    hpmjni_throw_out_of_bound(env, "Invalid SIMD argument");
+	    return;
 	}
 
 	/*	Initialize.	*/

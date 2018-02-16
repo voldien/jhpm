@@ -37,30 +37,58 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Matrix3x3_determinant
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix3x3_inverse
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+
+
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jboolean JNICALL Java_org_jhpm_Matrix3x3_isIdentity
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT void JNICALL Java_org_jhpm_Matrix3x3_identity
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix3x3_transpose
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jboolean JNICALL Java_org_jhpm_Matrix3x3_equals
-  (JNIEnv *env, jobject o1, jobject o2){}
+  (JNIEnv *env, jobject o1, jobject o2){
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
+}
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix3x3_clone
-  (JNIEnv *env, jobject o){}
+  (JNIEnv *env, jobject o){
+
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
+}
 
 JNIEXPORT jstring JNICALL Java_org_jhpm_Matrix3x3_toString
-  (JNIEnv *env, jobject o){}
+  (JNIEnv *env, jobject o){
+    jfloatArray arr;
+    jchar text[128];
+    jsize slen;
+
+    /*  Get memory.	*/
+    jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+    hpmvec4f* mat = (hpmvec4f*)e;
+
+    /*	Create string representation.	*/
+    slen = sprintf((char*)text,
+    		"{ %.1f, %.1f, %.1f }\n"
+    		"{ %.1f, %.1f, %.1f }\n"
+    		"{ %.1f, %.1f, %.1f }\n",
+    		mat[0][0], mat[1][0], mat[2][0],
+    		mat[0][1], mat[1][1], mat[2][1],
+    		mat[0][2], mat[1][2], mat[2][2] );
+
+	/*	Release float array.	*/
+    hpmjni_release_float_array_pointer_reference(env, arr, e);
+    return (*env)->NewString(env, text, slen);
+}
 

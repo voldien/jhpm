@@ -70,7 +70,7 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_squaredLength
 	jfloat length = hpm_vec3_lengthsquarefv(e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return length;
 }
@@ -87,62 +87,62 @@ JNIEXPORT void JNICALL Java_org_jhpm_Vector3_makeUnitVector(JNIEnv *env, jobject
 	hpm_vec3_normalizefv(e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_minComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_maxComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_maxAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_minAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector3_indexOfMinComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector3_indexOfMaxComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector3_indexOfMinAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector3_indexOfMaxAbsComponent
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_normalize
   (JNIEnv *env, jobject o){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_lerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat f){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_slerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat f){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	hpmjni_throw_unsupported_operation(env, "Not implemented");
 }
 
 
@@ -158,7 +158,7 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector3_equals
 	hpmjni_get_float_array_pointer_reference_a_b(env, objarr, farr, eoarr);
 
 	/*	Check equality.	*/
-	eq = hpm_vec4_eqfv(eoarr[0],eoarr[1]);
+	eq = hpm_vec4_eqfv(eoarr[0], eoarr[1]);
 
 	/*	Release pointer and float array object.	*/
 	hpmjni_release_float_array_pointer_reference_a_b(env, farr, eoarr);
@@ -177,17 +177,17 @@ JNIEXPORT jstring JNICALL Java_org_jhpm_Vector3_toString
 	jstring string;
 
 	int len;
-	char tostring[64];
+	jchar tostring[64];
 
 	/*	Get memory pointer of c object.	*/
 	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Comput the string.	*/
-	len = sprintf(tostring, "%f%f%f", e[0], e[1], e[2]);
+	len = sprintf((char*)tostring, "%f%f%f", e[0], e[1], e[2]);
 	string =(*env)->NewString(env, tostring, len);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 
 	return string;
 }
