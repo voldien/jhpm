@@ -121,8 +121,6 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_add
 
 	/*	Create copy instance.	*/
 	objs[2] = hpmjni_create_clone(env, o1);
-
-	/*	*/
 	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
 
 	/*	*/
@@ -135,14 +133,12 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_add
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_sub
   (JNIEnv *env, jobject o1, jobject o2){
-	jobject objs[3] = {o1, o2, NULL};
+	jobject objs[3] = {o1, o2};
 	jfloatArray arry[3];
 	jfloat* eo[3];
 
 	/*	Create copy instance.	*/
-	objs[2] = hpmjni_create_clone(env, o1);
-
-	/*	*/
+	objs[2] = Java_org_jhpm_Matrix4x4_clone(env, o1);
 	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
 
 	/*	*/
@@ -155,23 +151,57 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_sub
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_mul__Lorg_jhpm_Matrix4x4_2
   (JNIEnv *env, jobject o1, jobject o2){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	jobject objs[3] = {o1, o2};
+	jfloatArray arry[3];
+	jfloat* eo[3];
+
+	/*	Create copy instance.	*/
+	objs[2] = Java_org_jhpm_Matrix4x4_clone(env, o1);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
+
+	/*	*/
+	hpm_mat4x4_multiply_mat4x4fv((hpmvec4f*)eo[0], (hpmvec4f*)eo[1], (hpmvec4f*)eo[2]);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
+	return objs[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_mul__F
   (JNIEnv *env, jobject o1, jfloat f){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	jobject objs[2] = {o1};
+	jfloatArray arry[2];
+	jfloat* eo[2];
+
+	/*	Create copy instance.	*/
+	objs[1] = Java_org_jhpm_Matrix4x4_clone(env, o1);
+	hpmjni_get_float_array_pointer_reference_a_b(env, objs, arry, eo);
+
+	/*	*/
+	hpm_mat4x4_multiply_scalarf((hpmvec4f*)eo[0], f, (hpmvec4f*)eo[1]);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
+	return objs[1];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_mul__Lorg_jhpm_Vector4_2
   (JNIEnv *env, jobject o1, jobject o2){
 
-	/*	Create default instance of the object.	*/
-	jobject o = Java_org_jhpm_Matrix4x4_clone(env, o1);
+	jobject objs[3] = {o1, o2};
+	jfloatArray arry[3];
+	jfloat* eo[3];
 
+	/*	Create copy instance.	*/
+	objs[2] = Java_org_jhpm_Matrix4x4_clone(env, o1);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
 
+	/*	*/
+	hpm_mat4x4_multiply_mat1x4fv((hpmvec4f*)eo[0], (hpmvec4f*)eo[1], (hpmvec4f*)eo[2]);
 
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
+	return objs[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_clone
@@ -315,25 +345,32 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_perspective
   (JNIEnv *env, jclass c, jfloat angle, jfloat ratio, jfloat near, jfloat far){
 
 	/*	Create default instance of the object.	*/
-	jobject o = hpmjni_create_object_instance(env, c);
-
 	/*	*/
 	jfloatArray arr;
+	jobject o = hpmjni_create_object_instance(env, c);
 	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	hpm_mat4x4_projfv((hpmvec4f*)e, angle, ratio, near, far);
 
-	hpmjni_get_float_array_pointer_reference_a_b(env, arr, e);
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return o;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_lookAt
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jobject o3){
 
+	jobject objs[3] = {o1, o2, NULL};
+	jfloatArray arry[3];
+	jfloat* eo[3];
+
 	/*	Create default instance of the object.	*/
 	jobject o = hpmjni_create_object_instance(env, c);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, eo);
 
-	return (*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+	//hpm_util_lookatfv( )
+
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, eo);
+	return o;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_orth

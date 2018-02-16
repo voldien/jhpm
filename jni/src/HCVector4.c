@@ -111,8 +111,6 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_normalize
 
     jfloatArray arr;
     jobject co = Java_org_jhpm_Vector4_clone(env, o);
-
-    /*  */
     jfloat* e = hpmjni_get_float_array_pointer_reference(env, co, &arr);
 
     /*  */
@@ -140,7 +138,6 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector4_equals
 
 	/*	Release pointer and float array object.	*/
 	hpmjni_release_float_array_pointer_reference_a_b(env, farr, eoarr);
-
 	return eq;
 }
 
@@ -158,7 +155,6 @@ JNIEXPORT jstring JNICALL Java_org_jhpm_Vector4_toString(JNIEnv* env, jobject o)
 
     /*	*/
     hpmjni_release_float_array_pointer_reference(env, arr, e);
-
     return (*env)->NewString(env, text, slen);
 }
 
@@ -196,7 +192,6 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_minVec
 	jfloat* p[3];
 
 	o[2] = hpmjni_create_object_instance(env, c);
-
 	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, fa, p);
 
 	hpm_vec4_minfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], (hpmvec4f*)p[2]);
@@ -213,7 +208,6 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_maxVec
 	jfloat* p[3];
 
 	o[2] = hpmjni_create_object_instance(env, c);
-
 	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, fa, p);
 
 	hpm_vec4_maxfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], (hpmvec4f*)p[2]);
@@ -237,7 +231,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_dot
 	innerproduct = hpm_vec4_dotfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1]);
 
 	hpmjni_release_float_array_pointer_reference_a_b(env, fa, p);
-
 	return innerproduct;
 }
 

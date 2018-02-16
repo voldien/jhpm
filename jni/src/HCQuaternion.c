@@ -79,7 +79,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_dot
 JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_makeUnitQuaternion
   (JNIEnv* env, jobject o){
     jfloatArray arr;
-    /*  */
     jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
     /*  */
@@ -91,22 +90,53 @@ JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_makeUnitQuaternion
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_normalize
   (JNIEnv* env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	jobject objs;
+	jfloatArray arry;
+
+	/*	Create copy instance.	*/
+	objs = Java_org_jhpm_Quaternion_clone(env, o);
+	jfloat* p = hpmjni_get_float_array_pointer_reference(env, objs, &arry);
+
+	/*	*/
+	hpm_quat_normalizefv((hpmquatf*)p);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arry, p);
+	return objs;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_conjugate
   (JNIEnv* env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	jobject objs;
+	jfloatArray arry;
+
+	/*	Create copy instance.	*/
+	objs = Java_org_jhpm_Quaternion_clone(env, o);
+	jfloat* p = hpmjni_get_float_array_pointer_reference(env, objs, &arry);
+
+	/*	*/
+	hpm_quat_conjugatefv((hpmquatf*)p);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arry, p);
+	return objs;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_inverse
   (JNIEnv* env, jobject o){
+	jobject objs;
+	jfloatArray arry;
 
-	/*	Get memory pointer of c object.	*/
-	jfloatArray arr;
-	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+	/*	Create copy instance.	*/
+	objs = Java_org_jhpm_Quaternion_clone(env, o);
+	jfloat* p = hpmjni_get_float_array_pointer_reference(env, objs, &arry);
 
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	/*	*/
+	hpm_quat_inversefv((hpmquatf*)p);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arry, p);
+	return objs;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_clone
@@ -144,7 +174,6 @@ JNIEXPORT jstring JNICALL Java_org_jhpm_Quaternion_toString
     return (*env)->NewString(env, text, slen);
 }
 
-
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getPitch
   (JNIEnv *env, jobject o){
 	jfloat pitch;
@@ -159,7 +188,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getPitch
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return pitch;
 }
 
@@ -177,7 +205,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getYaw
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return yaw;
 }
 
@@ -195,7 +222,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Quaternion_getRoll
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return roll;
 }
 
@@ -254,48 +280,38 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_lerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat t){
 
 	jobject o[3] = {o1, o2};
-	jfloatArray fa[3];
+	jfloatArray arr[3];
 	jfloat* p[3];
 
 	/*	Get memory pointer of c object.	*/
 	o[2] = hpmjni_create_object_instance(env, c);
-	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, &fa, p);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, arr, p);
 
 	/*	Compute the lerp.	*/
 	hpm_quat_lerpfv((const hpmquatf*)p[0], (const hpmquatf*)p[1], t, (hpmquatf*)p[2]);
 
 	/*	Release float array.	*/
-	hpmjni_release_float_array_pointer_reference_a_b_c(env, fa, p);
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arr, p);
 
 	return o[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_slerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat t){
-	jobject o;
+	jobject o[3] = {o1, o2};
+	jfloatArray arr[3];
+	jfloat* p[3];
 
 	/*	Get memory pointer of c object.	*/
-	o = hpmjni_create_object_instance(env, c);
+	o[2] = hpmjni_create_object_instance(env, c);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, o, arr, p);
 
-	/*	*/
-	jfloatArray arro = hpmjni_get_float_array_reference(env, o);
-	jfloatArray arr1 = hpmjni_get_float_array_reference(env, o1);
-	jfloatArray arr2 = hpmjni_get_float_array_reference(env, o2);
-
-	/*	*/
-	jfloat* eo = (*env)->GetFloatArrayElements(env, arro, NULL);
-	jfloat* e1 = (*env)->GetFloatArrayElements(env, arr1, NULL);
-	jfloat* e2 = (*env)->GetFloatArrayElements(env, arr2, NULL);
-
-	/*	Compute the slerp.	*/
-	hpm_quat_slerpfv((const hpmquatf*)e1, (const hpmquatf*)e2, t, (hpmquatf*)eo);
+	/*	Compute the lerp.	*/
+	hpm_quat_slerpfv((const hpmquatf*)p[0], (const hpmquatf*)p[1], t, (hpmquatf*)p[2]);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arro, eo, 0);
-	(*env)->ReleaseFloatArrayElements(env, arr1, e1, 0);
-	(*env)->ReleaseFloatArrayElements(env, arr2, e2, 0);
-
-	return o;
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arr, p);
+	return o[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_identity
@@ -314,6 +330,5 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_identity
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return o;
 }
