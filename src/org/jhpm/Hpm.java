@@ -21,6 +21,9 @@ package org.jhpm;
  * Class responsible for initializing the
  * hpm library.
  *
+ * @apiNote Library is a Java wrapper
+ * around the hpm library.
+ *
  * @author Valdemar Lindberg
  */
 public class Hpm {
@@ -40,11 +43,11 @@ public class Hpm {
         HPM_SSE4_2(1 << 7),		/*	SSE4.2 = (Streaming SIMD Extensions),.	*/
         HPM_AVX(1 << 8),		/*	AVX Version 1 = (Advanced Vector Extension),.	*/
         HPM_AVX2(1 << 9),		/*	AVX Version 2 = (Advanced Vector Extension),.	= (Not tested),*/
-        HPM_AVX512(1 << 10),	/*	AVX512 = (Advanced Vector Extension),. = (Yet not supported),	*/
+        HPM_AVX512(1 << 10),		/*	AVX512 = (Advanced Vector Extension),. = (Yet not supported),	*/
         HPM_NEON(1 << 11),		/*	ARM	FPU = (floating-point unit), feature.	*/
         HPM_SVML(1 << 29),		/*	Not supported.	*/
         HPM_ACML(1 << 30),		/*	Not supported.	*/
-        HPM_DEFAULT(1 << 31);	/*	Default, makes attempt to take the best SIMD extension on the system.	*/
+        HPM_DEFAULT(1 << 31);		/*	Default, makes attempt to take the best SIMD extension on the system.	*/
 
         private long simd;
 
@@ -58,6 +61,7 @@ public class Hpm {
      *
      * @param simd SIMD extension for which will be loaded into memory.
      * @return status of initialization.
+     * @throws IllegalArgumentException
      */
     public static native int init(SIMD simd);
 

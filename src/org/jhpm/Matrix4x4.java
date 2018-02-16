@@ -32,7 +32,7 @@ public class Matrix4x4 {
 	private float[] e;
 
 	/**
-	 *
+	 * Create default instance.
 	 */
 	public Matrix4x4(){
 		this.e = new float[16];
@@ -159,14 +159,18 @@ public class Matrix4x4 {
 	 * Get vector4 element by index.
 	 * @param index of nth column.
 	 * @return nth column.
+     * @throws IndexOutOfBoundsException if index is either
+     * greater than 3 or less than 0.
 	 */
 	public native Vector4 get(int index);
 
 	/**
 	 * Get real value element by index.
-	 * @param i
-	 * @param j
+	 * @param i non-negative number between 0 and 3.
+	 * @param j non-negative number between 0 and 3.
 	 * @return value at index.
+     * @throws IndexOutOfBoundsException if index is either
+     * greater than 3 or less than 0.
 	 */
 	public native float get(int i, int j);
 

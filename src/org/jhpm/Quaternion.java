@@ -32,7 +32,7 @@ public class Quaternion {
     private float e[];
 
     /**
-     *
+     * Default constructor.
      */
     public Quaternion() {
         e = new float[4];
@@ -51,6 +51,7 @@ public class Quaternion {
     }
 
     /**
+     * Create Quaternion looking at position.
      * @param target
      * @param up
      * @return
@@ -222,7 +223,7 @@ public class Quaternion {
      *
      * @param lh
      * @param rh
-     * @return
+     * @return dot product between.
      */
     public native float dot(Quaternion lh, Quaternion rh);
 

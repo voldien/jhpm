@@ -34,48 +34,48 @@ public class Matrix3x3 {
         e = new float[16];
     }
 
-    public Matrix3x3(Matrix3x3 m) {
-    }
-
-    public Matrix3x3(Matrix4x4 m) {
-    }
-
     /**
      * Calculate the determinant.
      *
-     * @return
+     * @return determinant.
      */
     public native float determinant();
 
     /**
-     * @return
+     * Compute the inverse matrix.
+     * @return inverse matrix.
      */
     public native Matrix3x3 inverse();
 
     /**
-     * @return
+     * Determine of an identity matrix.
+     * @return true if identity, false otherwise.
      */
     public native boolean isIdentity();
 
     /**
-     *
+     * Make current object to identity
+     * matrix.
      */
     public native void identity();
 
     /**
-     * @return
+     * Transpose matrix.
+     * @return copy matrix, transposed.
      */
     public native Matrix3x3 transpose();
 
     /**
+     * Get nth coloum of matrix.
      * @param index
      * @return
      */
     public native Vector3 get(int index);
 
     /**
-     * @param i
-     * @param j
+     * Get elements in array.
+     * @param i nth coloum index.
+     * @param j nth row index.
      * @return
      */
     public native float get(int i, int j);
@@ -93,19 +93,20 @@ public class Matrix3x3 {
     public native Matrix4x4 sub(Matrix3x3 v1);
 
     /**
-     * @param v1
+     * @param f1
      * @return
      */
     public native Matrix3x3 mul(Matrix3x3 f1);
 
     /**
-     * @param v1
+     * @param f1
      * @return
      */
     public native Vector3 mul(final Vector3 f1);
 
     /**
-     * @return
+     * Determine if matrices are identical.
+     * @return true if identical, false otherwise.
      */
     @Override
     public native boolean equals(Object obj);
@@ -125,6 +126,8 @@ public class Matrix3x3 {
     protected native Object clone();
 
     /**
+     * Create string representation of the
+     * matrix.
      * @return non-null terminated string.
      */
     @Override
