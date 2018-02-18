@@ -94,17 +94,18 @@ public class Vector2 {
     /**
      * Compute length.
      *
-     * @return
+     * @return non-negative number.
      */
     public native float length();
 
     /**
-     * @return
+     * Compute length in square.
+     * @return non-negative number.
      */
     public native float squaredLength();
 
     /**
-     *
+     * Make current vector unit length.
      */
     public native void makeUnitVector();
 

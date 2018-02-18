@@ -29,7 +29,8 @@ package org.jhpm;
 public class Hpm {
 
     /**
-     *
+     * All possible SIMD mode
+     * support.
      */
     public enum SIMD {
         HPM_NONE(0 << 0),		/*	No HPM SIMD exention flag.	*/

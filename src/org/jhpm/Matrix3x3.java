@@ -120,7 +120,8 @@ public class Matrix3x3 {
     }
 
     /**
-     *
+     * Clone object
+     * @return
      */
     @Override
     protected native Object clone();

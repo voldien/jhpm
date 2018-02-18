@@ -39,7 +39,8 @@ public class Quaternion {
     }
 
     /**
-     *
+     * Create instance by setting
+     * each elements individually.
      * @param w
      * @param x
      * @param y
@@ -52,6 +53,7 @@ public class Quaternion {
 
     /**
      * Create Quaternion looking at position.
+     *
      * @param target
      * @param up
      * @return
@@ -67,6 +69,7 @@ public class Quaternion {
 
     /**
      * Create quaternion from axis.
+     *
      * @param pitch
      * @param yaw
      * @param roll
@@ -74,8 +77,10 @@ public class Quaternion {
      */
     public static native Quaternion createQuaternionOfAxis(float pitch, float yaw,
                                                            float roll);
+
     /**
      * Create quaternion from Eular axis.
+     *
      * @param axis eular axis object.
      * @return rotated quaternion.
      */
@@ -83,6 +88,7 @@ public class Quaternion {
 
     /**
      * Create quaternion from rotation around axis.
+     *
      * @param axis
      * @param angle
      * @return
@@ -91,6 +97,7 @@ public class Quaternion {
 
     /**
      * Create quaternion from direction vector.
+     *
      * @param direction direction.
      * @return normalized quaternion.
      */
@@ -100,8 +107,8 @@ public class Quaternion {
      * Create linear interpolate quaternion
      * from two points.
      *
-     * @param from starting point.
-     * @param to end point.
+     * @param from  starting point.
+     * @param to    end point.
      * @param speed [0,1]
      * @return interpolated quaternion.
      */
@@ -112,13 +119,14 @@ public class Quaternion {
      * Create spherical interpolate quaternion
      * from two points.
      *
-     * @param from starting point.
-     * @param to end point.
+     * @param from  starting point.
+     * @param to    end point.
      * @param speed [0,1]
      * @return interpolated quaternion.
      */
     public static native Quaternion slerp(Quaternion from, Quaternion to,
                                           float speed);
+
     /**
      * Create identity quaternion.
      *
@@ -129,45 +137,64 @@ public class Quaternion {
     /**
      * Get individual X component.
      */
-    public float x(){return e[1];}
+    public float x() {
+        return e[1];
+    }
 
     /**
      * Get individual Y component.
+     *
      * @return
      */
-    public float y(){return e[2];}
+    public float y() {
+        return e[2];
+    }
 
     /**
      * Get individual Z component.
+     *
      * @return
      */
-    public float z(){return e[3];}
+    public float z() {
+        return e[3];
+    }
 
     /**
      * Get individual W component.
+     *
      * @return
      */
-    public float w(){return e[1];}
+    public float w() {
+        return e[1];
+    }
 
     /**
      * Set individual W component.
      */
-    public void setW(float w){e[0] = w;}
+    public void setW(float w) {
+        e[0] = w;
+    }
 
     /**
      * Set individual X component.
      */
-    public void setX(float x){e[1] = x;}
+    public void setX(float x) {
+        e[1] = x;
+    }
 
     /**
      * Set individual Y component.
      */
-    public void setY(float y){e[2] = y;}
+    public void setY(float y) {
+        e[2] = y;
+    }
 
     /**
      * Set individual Z component.
      */
-    public void setZ(float z){e[3] = z;}
+    public void setZ(float z) {
+        e[3] = z;
+    }
 
     /**
      * Set the individual components in a single
@@ -199,10 +226,10 @@ public class Quaternion {
      * Get direction vector from vector
      * direction.
      *
-     * @param vector
-     * @return
+     * @param unitDirect
+     * @return direction in respect to unitDirect vector.
      */
-    public native Vector3 getVector(Vector3 vector);
+    public native Vector3 getVector(Vector3 unitDirect);
 
     /**
      * Compute the magnitude.
@@ -258,12 +285,13 @@ public class Quaternion {
     /**
      * Convert quaternion to matrix4x4.
      *
-     * @return
+     * @return non-null object.
      */
     public native Matrix4x4 getMatrix4x4();
 
     /**
-     * @return
+     * Convert quaternion to matrix3x3.
+     * @return non-null object.
      */
     public native Matrix3x3 getMatrix3x3();
 
@@ -278,6 +306,7 @@ public class Quaternion {
     /**
      * Add quaternion with another quaternion
      * component wise.
+     *
      * @param q
      * @return
      */
@@ -286,6 +315,7 @@ public class Quaternion {
     /**
      * Subtract quaternion with another quaternion
      * component wise.
+     *
      * @param q
      * @return
      */
@@ -293,6 +323,7 @@ public class Quaternion {
 
     /**
      * Multiply quaternion with quaternion.
+     *
      * @param q
      * @return
      */
@@ -300,6 +331,7 @@ public class Quaternion {
 
     /**
      * Multiply quaternion with vector.
+     *
      * @param v
      * @return
      */
@@ -307,13 +339,15 @@ public class Quaternion {
 
     /**
      * Multiply quaternion with scalar.
-     * @param scalar scaler.
+     *
+     * @param scalar
      * @return
      */
     public native Quaternion mul(float scalar);
 
     /**
      * Create clone object.
+     *
      * @return non-null quaternion object with same
      * value for each components.
      */
@@ -322,6 +356,7 @@ public class Quaternion {
 
     /**
      * Perform equality compare if object equal
+     *
      * @return true if object is equal per component,
      * otherwise false.
      */
@@ -330,7 +365,8 @@ public class Quaternion {
 
     /**
      * Compute the hash of quaternion object.
-     * @Return
+     *
+     * @Return hash code.
      */
     @Override
     public int hashCode() {
@@ -339,6 +375,7 @@ public class Quaternion {
 
     /**
      * Create string representation.
+     *
      * @return non-null terminated string.
      */
     @Override

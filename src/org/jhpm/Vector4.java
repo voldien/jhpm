@@ -31,20 +31,22 @@ public class Vector4 {
     private float e[];
 
     /**
-     *
+     * Create default instance of the object.
      */
     public Vector4() {
         this.e = new float[4];
     }
 
     /**
-     * @param val
+     * Create instance with align elements values.
+     * @param val align value.
      */
     public Vector4(float val) {
         set(val, val, val, val);
     }
 
     /**
+     * Create instance by setting each elements individually.
      * @param x
      * @param y
      * @param z
@@ -55,12 +57,13 @@ public class Vector4 {
     }
 
     /**
+     * Create a normalize vector.
      * @return
      */
-    public static native Vector4 unitVector3(Vector4 v);
+    public static native Vector4 unitVector(Vector4 v);
 
     /**
-     * Compute minimum vector.
+     * Compute the min vector by component.
      *
      * @param v1
      * @param v2
@@ -69,6 +72,7 @@ public class Vector4 {
     public static native Vector4 minVec(final Vector4 v1, final Vector4 v2);
 
     /**
+     * Compute the max vector by component.
      * @param v1
      * @param v2
      * @return
@@ -76,11 +80,11 @@ public class Vector4 {
     public static native Vector4 maxVec(final Vector4 v1, final Vector4 v2);
 
     /**
-     * Compute dot product between v2 and v2
+     * Compute dot product between v1 and v2
      *
-     * @param v1
-     * @param v2
-     * @return
+     * @param v1 valid vector4.
+     * @param v2 valid vector4.
+     * @return inner dot product between v1 and v2.
      */
     public static native float dot(Vector4 v1, Vector4 v2);
 
@@ -125,10 +129,11 @@ public class Vector4 {
     public void setW(float w){e[0] = w;}
 
     /**
-     * @param x
-     * @param y
-     * @param z
-     * @param w
+     * Set each elements individually.
+     * @param x element component.
+     * @param y element component.
+     * @param z element component.
+     * @param w element component.
      */
     public native void set(float x, float y, float z, float w);
 
@@ -237,25 +242,31 @@ public class Vector4 {
     public native Vector4 div(final float f1);
 
     /**
+     * Multiple vector by a vector.
      * @param f1
      * @return
      */
     public native Vector4 mul(final Vector4 f1);
 
     /**
+     * Multiple vector by a scalar.
      * @param f1
      * @return
      */
     public native Vector4 mul(final float f1);
 
     /**
-     *
+     * Compare if object is equal.
+     * @param obj non-null object.
+     * @return true if equal.
      */
     @Override
     public native boolean equals(Object obj);
 
     /**
-     *
+     * Compute hash code representing
+     * the vector elements.
+     * @return
      */
     @Override
     public int hashCode() {
