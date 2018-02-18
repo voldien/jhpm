@@ -292,7 +292,6 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Quaternion_lerp
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference_a_b_c(env, arr, p);
-
 	return o[2];
 }
 

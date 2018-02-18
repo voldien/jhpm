@@ -18,6 +18,7 @@
 */
 #include"org_jhpm_Hpm.h"
 #include<hpm/hpm.h>
+#include"org_jhpm_helper.h"
 
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
@@ -34,7 +35,7 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
 	/*  Check if value is power of 2.   */
 	if(( simd && ((simd - 1) & simd) )){
 	    hpmjni_throw_out_of_bound(env, "Invalid SIMD argument");
-	    return;
+	    return -1;
 	}
 
 	/*	Initialize.	*/

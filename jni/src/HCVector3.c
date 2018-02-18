@@ -34,8 +34,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_negate
 	hpm_vec4_negatefv((hpmvec4f*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return c;
 }
 
@@ -49,11 +48,10 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_length
 	e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute the length.	*/
-	jfloat length = hpm_vec3_lengthfv(e);
+	jfloat length = hpm_vec3_lengthfv((const hpmvec3f*)e);
 
 	/*	Release float array.	*/
-	(*env)->ReleaseFloatArrayElements(env, arr, e, 0);
-
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return length;
 }
 
@@ -67,11 +65,10 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector3_squaredLength
 	e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute the length.	*/
-	jfloat length = hpm_vec3_lengthsquarefv(e);
+	jfloat length = hpm_vec3_lengthsquarefv((const hpmvec3f*)e);
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return length;
 }
 
@@ -84,7 +81,7 @@ JNIEXPORT void JNICALL Java_org_jhpm_Vector3_makeUnitVector(JNIEnv *env, jobject
 	e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Compute the length.	*/
-	hpm_vec3_normalizefv(e);
+	hpm_vec3_normalizefv((hpmvec3f*)e);
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
@@ -132,17 +129,52 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Vector3_indexOfMaxAbsComponent
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_normalize
   (JNIEnv *env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+    jfloatArray arr;
+    jobject co = Java_org_jhpm_Vector3_clone(env, o);
+    jfloat* e = hpmjni_get_float_array_pointer_reference(env, co, &arr);
+
+    /*  */
+    hpm_vec4_normalizefv((hpmvec4f*)e);
+
+	/*	Release float array.	*/
+    hpmjni_release_float_array_pointer_reference(env, arr, e);
+    return co;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_lerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat f){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+
+	jobject objs[3] = {o1, o2};
+	jfloatArray arry[3];
+	jfloat* p[3];
+
+	/*	Create default instance of the object.	*/
+	objs[2] = hpmjni_create_object_instance(env, c);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, p);
+
+	hpm_vec4_lerpfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], f, (hpmvec4f*)p[2]);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, p);
+	return objs[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_slerp
   (JNIEnv *env, jclass c, jobject o1, jobject o2, jfloat f){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+
+	jobject objs[3] = {o1, o2};
+	jfloatArray arry[3];
+	jfloat* p[3];
+
+	/*	Create default instance of the object.	*/
+	objs[2] = hpmjni_create_object_instance(env, c);
+	hpmjni_get_float_array_pointer_reference_a_b_c(env, objs, arry, p);
+
+	hpm_vec4_slerpfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], f, (hpmvec4f*)p[2]);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b_c(env, arry, p);
+	return objs[2];
 }
 
 
@@ -158,11 +190,10 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector3_equals
 	hpmjni_get_float_array_pointer_reference_a_b(env, objarr, farr, eoarr);
 
 	/*	Check equality.	*/
-	eq = hpm_vec4_eqfv(eoarr[0], eoarr[1]);
+	eq = hpm_vec4_eqfv((const hpmvec4f*)eoarr[0], (const hpmvec4f*)eoarr[1]);
 
 	/*	Release pointer and float array object.	*/
 	hpmjni_release_float_array_pointer_reference_a_b(env, farr, eoarr);
-
 	return eq;
 }
 
@@ -183,12 +214,11 @@ JNIEXPORT jstring JNICALL Java_org_jhpm_Vector3_toString
 	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
 
 	/*	Comput the string.	*/
-	len = sprintf((char*)tostring, "%f%f%f", e[0], e[1], e[2]);
+	len = sprintf((char*)tostring, "{ %.1f, %.1f, %.1f }", e[0], e[1], e[2]);
 	string =(*env)->NewString(env, tostring, len);
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return string;
 }
 

@@ -33,7 +33,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_length
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return length;
 }
 
@@ -49,7 +48,6 @@ JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_squaredLength
 
 	/*	Release float array.	*/
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
-
 	return length;
 }
 
@@ -116,7 +114,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_normalize
     /*  */
     hpm_vec4_normalizefv((hpmvec4f*)e);
 
-    /*  */
+	/*	Release float array.	*/
     hpmjni_release_float_array_pointer_reference(env, arr, e);
     return co;
 }
@@ -134,7 +132,7 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector4_equals
 	hpmjni_get_float_array_pointer_reference_a_b(env, objarr, farr, eoarr);
 
 	/*	Check equality.	*/
-	eq = hpm_vec4_eqfv(eoarr[0], eoarr[1]);
+	eq = hpm_vec4_eqfv((const hpmvec4f*)eoarr[0], (const hpmvec4f*)eoarr[1]);
 
 	/*	Release pointer and float array object.	*/
 	hpmjni_release_float_array_pointer_reference_a_b(env, farr, eoarr);
@@ -197,7 +195,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_minVec
 	hpm_vec4_minfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], (hpmvec4f*)p[2]);
 
 	hpmjni_release_float_array_pointer_reference_a_b_c(env, fa, p);
-	return p[2];
+	return o[2];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_maxVec
@@ -213,7 +211,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_maxVec
 	hpm_vec4_maxfv((const hpmvec4f*)p[0], (const hpmvec4f*)p[1], (hpmvec4f*)p[2]);
 
 	hpmjni_release_float_array_pointer_reference_a_b_c(env, fa, p);
-	return p[2];
+	return o[2];
 
 }
 
