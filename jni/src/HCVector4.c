@@ -156,16 +156,22 @@ JNIEXPORT jstring JNICALL Java_org_jhpm_Vector4_toString(JNIEnv* env, jobject o)
     return (*env)->NewString(env, text, slen);
 }
 
-JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_clone(JNIEnv* env, jobject o) {
+JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_clone(JNIEnv* env, jobject o1) {
 
-	jobjectArray arr;
-	jobject co1 = hpmjni_create_clone(env, o);
+	jobject o[2] = {o1};
+	jfloatArray fa[2];
+	jfloat* p[2];
 
-	jfloat* e = hpmjni_get_float_array_pointer_reference(env, co1, &arr);
+	/*	Create clone object.	*/
+	/*	Get memory pointer of c object.	*/
+	o[1] = hpmjni_create_clone(env, o1);
+	hpmjni_get_float_array_pointer_reference_a_b(env, o, fa, p);
 
-//    hpm_vec4_copyfv()
+	hpm_vec4_copyfv((hpmvec4f*)p[1],(const hpmvec4f*)p[0]);
 
-	return co1;
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b(env, fa, p);
+	return o[1];
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector4_unitVector3

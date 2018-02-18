@@ -198,8 +198,22 @@ JNIEXPORT jboolean JNICALL Java_org_jhpm_Vector3_equals
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_clone
-  (JNIEnv *env, jobject o){
-	return hpmjni_create_clone(env, o);
+  (JNIEnv *env, jobject o1){
+
+	jobject o[2] = {o1};
+	jfloatArray fa[2];
+	jfloat* p[2];
+
+	/*	Create clone object.	*/
+	/*	Get memory pointer of c object.	*/
+	o[1] = hpmjni_create_clone(env, o1);
+	hpmjni_get_float_array_pointer_reference_a_b(env, o, fa, p);
+
+	hpm_vec4_copyfv((hpmvec4f*)p[1],(const hpmvec4f*)p[0]);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference_a_b(env, fa, p);
+	return o[1];
 }
 
 JNIEXPORT jstring JNICALL Java_org_jhpm_Vector3_toString
