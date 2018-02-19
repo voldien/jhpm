@@ -66,22 +66,44 @@ JNIEXPORT void JNICALL Java_org_jhpm_Vector4_makeUnitVector(JNIEnv* env, jobject
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_minComponent
   (JNIEnv *env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+
+	/*	Get memory pointer of c object.	*/
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	/*	Compute the length.	*/
+	jfloat min = hpm_vec4_min_compfv((const hpmvec4f*)e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+	return min;
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_maxComponent
   (JNIEnv *env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+
+	/*	Get memory pointer of c object.	*/
+	jfloatArray arr;
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	/*	Compute the length.	*/
+	jfloat min = hpm_vec4_max_compfv((const hpmvec4f*)e);
+
+	/*	Release float array.	*/
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+	return min;
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_maxAbsComponent
   (JNIEnv *env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	jfloat max = Java_org_jhpm_Vector4_maxComponent(env, o);
+	return max * max;
 }
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_minAbsComponent
   (JNIEnv *env, jobject o){
-	hpmjni_throw_unsupported_operation(env, "Not implemented");
+	jfloat max = Java_org_jhpm_Vector4_minComponent(env, o);
+	return max * max;
 }
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Vector4_indexOfMinComponent
