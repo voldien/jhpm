@@ -18,53 +18,50 @@
 */
 #ifndef _ORG_JHPM_HELPER_H_
 #define _ORG_JHPM_HELPER_H_ 1
-#include <jni.h>
-#include <hpm/hpm.h>
+#include<jni.h>
+#include<assert.h>
+#include<hpm/hpm.h>
 
 /**
- *	Get object float pointer.
- *	@Return get float array data type.
+ *  Forward function declaration.
  */
-HPM_ALWAYS_INLINE jfloatArray hpmjni_get_float_array_reference(JNIEnv * env, jobject objref){
+extern jfloatArray hpmjni_get_float_array_reference(JNIEnv* __restrict__ env,
+        jobject __restrict__ objref);
 
-	/*	Get class type from object.	*/
-	jclass cs = (*env)->GetObjectClass(env, objref);
-	jfieldID field = (*env)->GetFieldID(env, cs, "e", "[F");
+extern jfloat* hpmjni_get_float_array_pointer_reference(
+        JNIEnv* __restrict__ env, jobject __restrict__ objref,
+        jfloatArray* __restrict__ array);
 
-	/*	Get float array reference object.	*/
-	jfloatArray arr = (*env)->GetObjectField(env, objref, field);
+extern void hpmjni_get_float_array_pointer_reference_a_b(
+        JNIEnv* __restrict__ env, jobject* __restrict__ objref,
+        jfloatArray* __restrict__ parray, jfloat** __restrict__ pfloat);
 
-	/*	*/
-	return arr;
-}
+extern void hpmjni_get_float_array_pointer_reference_a_b_c(
+        JNIEnv* __restrict__ env, jobject* __restrict__ objref,
+        jfloatArray* __restrict__ parray, jfloat** __restrict__ pfloat);
+
+extern void hpmjni_release_float_array_pointer_reference(JNIEnv* __restrict__ env,
+        const jfloatArray __restrict__ array, jfloat* __restrict__ fp);
+
+extern void hpmjni_release_float_array_pointer_reference_a_b(
+        JNIEnv* __restrict__ env, jfloatArray* __restrict__ parray,
+        jfloat** __restrict__ pfloat);
+
+extern void hpmjni_release_float_array_pointer_reference_a_b_c(
+        JNIEnv* __restrict__ env, jfloatArray* __restrict__ parray,
+        jfloat** __restrict__ pfloat);
+
+extern jobject hpmjni_create_object_instance(JNIEnv* __restrict__ env,
+        jclass __restrict__ c);
+
+extern jobject hpmjni_create_clone(JNIEnv* __restrict__ env,
+        jobject __restrict__ o);
 
 /**
- *	Create instance object of
- *	specified class type.
- *	@Return
+ *  Exceptions forward function declaration.
  */
-HPM_ALWAYS_INLINE jobject hpmjni_create_object_instance(JNIEnv* env, jclass c){
-
-	/*	Get constructor method ID.	*/
-	jmethodID constructor = (*env)->GetMethodID(env, c, "<init>", "()V");
-
-	/*	Create new object.	*/
-	jobject o = (*env)->NewObject(env, c, constructor);
-
-	/*	*/
-	return o;
-}
-
-/**
- *	Create clone.
- *	@Return
- */
-HPM_ALWAYS_INLINE jobject hpmjni_create_clone(JNIEnv* env, jobject o){
-	jclass c = (*env)->GetObjectClass(env, o);
-
-	jmethodID mid = (*env)->GetMethodID(env, c, "<init>", "()V");
-
-	return (*env)->NewObject(env, c, mid, o);
-}
-
+extern void hpmjni_throw_out_of_bound(JNIEnv* __restrict__ env, const char* __restrict__ msg);
+extern void hpmjni_throw_illegal_argument(JNIEnv* __restrict__ env, const char* __restrict__ msg);
+extern void hpmjni_throw_null_reference(JNIEnv* __restrict__ env, const char* __restrict__ msg);
+extern void hpmjni_throw_unsupported_operation(JNIEnv* __restrict__ env, const char* __restrict__ msg);
 #endif

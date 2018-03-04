@@ -18,6 +18,7 @@
 */
 #include"org_jhpm_Hpm.h"
 #include<hpm/hpm.h>
+#include"org_jhpm_helper.h"
 
 
 JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
@@ -25,6 +26,7 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
 
 	unsigned int simd;
 	jint status = 0;
+
 	/*	Get enum value.	*/
 	jclass enc = (*env)->GetObjectClass(env, o);
 	jfieldID fid = (*env)->GetFieldID(env, enc, "simd", "J");
@@ -32,9 +34,8 @@ JNIEXPORT jint JNICALL Java_org_jhpm_Hpm_init
 
 	/*  Check if value is power of 2.   */
 	if(( simd && ((simd - 1) & simd) )){
-	    char *className = "java/lang/IllegalArgumentException";
-	    jclass illex = (*env)->FindClass(env, className);
-	    return (*env)->ThrowNew(env, illex, "Invalid SIMD argument");
+	    hpmjni_throw_out_of_bound(env, "Invalid SIMD argument");
+	    return -1;
 	}
 
 	/*	Initialize.	*/
