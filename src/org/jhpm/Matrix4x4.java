@@ -34,12 +34,13 @@ public class Matrix4x4 {
     /**
      * Create default instance.
      */
-    public Matrix4x4(){
+    public Matrix4x4() {
         this.e = new float[16];
     }
 
     /**
-     *	Create translation matrix.
+     * Create translation matrix.
+     *
      * @param x position in X axis.
      * @param y position in Y axis.
      * @param z position in Z axis.
@@ -48,16 +49,16 @@ public class Matrix4x4 {
     public native static Matrix4x4 translate(float x, float y, float z);
 
     /**
-     *	Create translation matrix.
+     * Create translation matrix.
      *
-     *	@return translated matrix
+     * @return translated matrix
      */
     public native static Matrix4x4 translate(Vector3 translation);
 
     /**
-     *	Create rotation matrix from angle around the axis.
+     * Create rotation matrix from angle around the axis.
      *
-     *	@return rotation matrix.
+     * @return rotation matrix.
      */
     public native static Matrix4x4 rotate(float angle, Vector3 axis);
 
@@ -69,22 +70,24 @@ public class Matrix4x4 {
     public static native Matrix4x4 rotate(Quaternion quat);
 
     /**
-     *	Create scale matrix.
+     * Create scale matrix.
      *
-     *	@return scale matrix.
+     * @return scale matrix.
      */
     public native static Matrix4x4 scale(float x, float y, float z);
 
     /**
      * Create scale matrix.
+     *
      * @param scale
-     * @return
+     * @return scale matrix.
      */
     public native static Matrix4x4 scale(Vector3 scale);
 
     /**
      * Create perspective matrix.
-     * @param fov angle in radius
+     *
+     * @param fov    angle in radius
      * @param aspect image view ratio.
      * @param near
      * @param far
@@ -98,7 +101,7 @@ public class Matrix4x4 {
      * matrix.
      *
      * @param lookPosition
-     * @param position transformation in world space.
+     * @param position     transformation in world space.
      * @param forward
      * @return
      */
@@ -106,38 +109,43 @@ public class Matrix4x4 {
                                           Vector3 position, Vector3 forward);
 
     /**
-     * Create orthographic perspectice.
+     * Create orthographic perspective.
+     *
      * @param left
      * @param right
      * @param bottom
      * @param top
      * @param near
      * @param far
-     * @return
+     * @return perspective matrix.
      */
     public native static Matrix4x4 orth(float left, float right, float bottom, float top,
                                         float near, float far);
 
     /**
-     *	Create bias matrix.
+     * Create bias matrix.
+     *
      * @return
      */
     public native static Matrix4x4 biasMatrix();
 
     /**
      * Create identity matrix.
+     *
      * @return identity matrix.
      */
     public native static Matrix4x4 identity();
 
     /**
      * Check if matrix is an identity matrix.
+     *
      * @return true if an identity matrix.
      */
     public native boolean isIdentity();
 
     /**
      * Compute determinant of the matrix.
+     *
      * @return determine of the matrix.
      */
     public native float determinant();
@@ -145,65 +153,66 @@ public class Matrix4x4 {
     /**
      * Compute the inverse vector
      * if possible.
+     *
      * @return inversed matrix.
      */
     public native Matrix4x4 inverse();
 
     /**
      * Transpose matrix.
+     *
      * @return transposed matrix.
      */
     public native Matrix4x4 transpose();
 
     /**
      * Get vector4 element by index.
+     *
      * @param index of nth column.
      * @return nth column.
      * @throws IndexOutOfBoundsException if index is either
-     * greater than 3 or less than 0.
+     *                                   greater than 3 or less than 0.
      */
     public native Vector4 get(int index);
 
     /**
      * Get real value element by index.
+     *
      * @param i non-negative number between 0 and 3.
      * @param j non-negative number between 0 and 3.
      * @return value at index.
      * @throws IndexOutOfBoundsException if index is either
-     * greater than 3 or less than 0.
+     *                                   greater than 3 or less than 0.
      */
     public native float get(int i, int j);
 
     /**
      * Add matrix.
+     *
      * @param v1
      * @return
      */
     public native Matrix4x4 add(final Matrix4x4 v1);
 
     /**
-     *
      * @param v1
      * @return
      */
     public native Matrix4x4 sub(final Matrix4x4 v1);
 
     /**
-     *
      * @param f1
      * @return
      */
     public native Matrix4x4 mul(Matrix4x4 f1);
 
     /**
-     *
      * @param f
      * @return
      */
     public native Matrix4x4 mul(float f);
 
     /**
-     *
      * @param f1
      * @return
      */
@@ -211,6 +220,7 @@ public class Matrix4x4 {
 
     /**
      * Create clone object of matrix4x4.
+     *
      * @Return clone object.
      */
     @Override
@@ -219,6 +229,7 @@ public class Matrix4x4 {
     /**
      * Compare two matrices and check
      * if equal
+     *
      * @Return true if object equal by each value.
      */
     @Override
@@ -226,6 +237,7 @@ public class Matrix4x4 {
 
     /**
      * Compute the hash code.
+     *
      * @Return true.
      */
     @Override
@@ -236,6 +248,7 @@ public class Matrix4x4 {
     /**
      * Create string representation of the
      * matrix.
+     *
      * @return non-null terminated string.
      */
     @Override
