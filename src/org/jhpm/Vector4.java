@@ -39,6 +39,7 @@ public class Vector4 {
 
     /**
      * Create instance with align elements values.
+     *
      * @param val align value.
      */
     public Vector4(float val) {
@@ -47,6 +48,7 @@ public class Vector4 {
 
     /**
      * Create instance by setting each elements individually.
+     *
      * @param x
      * @param y
      * @param z
@@ -58,7 +60,8 @@ public class Vector4 {
 
     /**
      * Create a normalize vector.
-     * @return
+     *
+     * @return normalized vector.
      */
     public static native Vector4 unitVector(Vector4 v);
 
@@ -73,6 +76,7 @@ public class Vector4 {
 
     /**
      * Compute the max vector by component.
+     *
      * @param v1
      * @param v2
      * @return
@@ -91,45 +95,62 @@ public class Vector4 {
     /**
      * @return Get component x of vector.
      */
-    public float x(){return e[0];}
+    public float x() {
+        return e[0];
+    }
 
     /**
      * @return Get component x of vector.
      */
-    public float y(){return e[1];}
+    public float y() {
+        return e[1];
+    }
 
     /**
      * @return Get component x of vector.
      */
-    public float z(){return e[2];}
+    public float z() {
+        return e[2];
+    }
 
     /**
      * @return Get component x of vector.
      */
-    public float w(){return e[3];}
+    public float w() {
+        return e[3];
+    }
 
     /**
      * @param x
      */
-    public void setX(float x){e[0] = x;}
+    public void setX(float x) {
+        e[0] = x;
+    }
 
     /**
      * @return Get component x of vector.
      */
-    public void setY(float y){e[1] = y;}
+    public void setY(float y) {
+        e[1] = y;
+    }
 
     /**
      * @return Get component x of vector.
      */
-    public void setZ(float z){e[0] = z;}
+    public void setZ(float z) {
+        e[0] = z;
+    }
 
     /**
      * @return Get component x of vector.
      */
-    public void setW(float w){e[0] = w;}
+    public void setW(float w) {
+        e[0] = w;
+    }
 
     /**
      * Set each elements individually.
+     *
      * @param x element component.
      * @param y element component.
      * @param z element component.
@@ -216,47 +237,56 @@ public class Vector4 {
     public native Vector4 normalize();
 
     /**
-     * Add vector.
+     * Addition of vector by each elements
+     * individually.
      *
-     * @param v1
-     * @return
+     * @param v1 valid vector.
+     * @return addition vector.
      */
     public native Vector4 add(final Vector4 v1);
 
     /**
-     * @param v1
+     * Subtract
+     *
+     * @param v1 valid vector.
      * @return
      */
     public native Vector4 sub(final Vector4 v1);
 
     /**
-     * @param v1
-     * @return
+     * Divide vector by each element by each component
+     * component wise.
+     *
+     * @param v1 valid vector.
+     * @return divided vector.
      */
     public native Vector4 div(final Vector4 v1);
 
     /**
-     * @param f1
-     * @return
+     * @param f1 scalar.
+     * @return divided vector.
      */
     public native Vector4 div(final float f1);
 
     /**
      * Multiple vector by a vector.
+     *
      * @param f1
-     * @return
+     * @return product vector.
      */
     public native Vector4 mul(final Vector4 f1);
 
     /**
      * Multiple vector by a scalar.
+     *
      * @param f1
-     * @return
+     * @return product vector.
      */
     public native Vector4 mul(final float f1);
 
     /**
      * Compare if object is equal.
+     *
      * @param obj non-null object.
      * @return true if equal.
      */
@@ -266,7 +296,8 @@ public class Vector4 {
     /**
      * Compute hash code representing
      * the vector elements.
-     * @return
+     *
+     * @return hash code representing the vector elements.
      */
     @Override
     public int hashCode() {
@@ -275,6 +306,7 @@ public class Vector4 {
 
     /**
      * Convert to readable string format.
+     *
      * @return non-null terminated string.
      */
     @Override
@@ -282,6 +314,7 @@ public class Vector4 {
 
     /**
      * Create clone object.
+     *
      * @return non-null object.
      */
     @Override

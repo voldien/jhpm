@@ -112,7 +112,7 @@ public class Matrix3x3 {
     public native boolean equals(Object obj);
 
     /**
-     * @Return
+     * @return hash code representing the vector elements.
      */
     @Override
     public int hashCode() {
