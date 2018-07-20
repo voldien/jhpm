@@ -325,7 +325,7 @@ public class Quaternion {
      * Multiply quaternion with quaternion.
      *
      * @param q
-     * @return
+     * @return quaternion product.
      */
     public native Quaternion mul(Quaternion q);
 
@@ -333,7 +333,7 @@ public class Quaternion {
      * Multiply quaternion with vector.
      *
      * @param v
-     * @return
+     * @return quaternion product.
      */
     public native Quaternion mul(Vector3 v);
 
@@ -341,7 +341,7 @@ public class Quaternion {
      * Multiply quaternion with scalar.
      *
      * @param scalar
-     * @return
+     * @return quaternion product.
      */
     public native Quaternion mul(float scalar);
 

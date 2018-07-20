@@ -51,7 +51,7 @@ public class Matrix4x4 {
     /**
      * Create translation matrix.
      *
-     * @return translated matrix
+     * @return translated matrix.
      */
     public native static Matrix4x4 translate(Vector3 translation);
 
@@ -89,8 +89,8 @@ public class Matrix4x4 {
      *
      * @param fov    angle in radius
      * @param aspect image view ratio.
-     * @param near
-     * @param far
+     * @param near   distance from origin to start plane.
+     * @param far    distance to the end plane.
      * @return perspective matrix.
      */
     public native static Matrix4x4 perspective(float fov, float aspect, float near,
@@ -100,24 +100,24 @@ public class Matrix4x4 {
      * Create look at orientation translated
      * matrix.
      *
-     * @param lookPosition
+     * @param lookPosition camera eye look at position.
      * @param position     transformation in world space.
-     * @param forward
-     * @return
+     * @param up
+     * @return look at transformation matrix.
      */
     public native static Matrix4x4 lookAt(Vector3 lookPosition,
-                                          Vector3 position, Vector3 forward);
+                                          Vector3 position, Vector3 up);
 
     /**
      * Create orthographic perspective.
      *
-     * @param left
-     * @param right
-     * @param bottom
-     * @param top
-     * @param near
-     * @param far
-     * @return perspective matrix.
+     * @param left   left distance from box origin.
+     * @param right  right distance from box origin.
+     * @param bottom bottom distance from box origin.
+     * @param top    top distance from box origin.
+     * @param near   near distance from box origin.
+     * @param far    far distance from box origin.
+     * @return orthographic perspective matrix.
      */
     public native static Matrix4x4 orth(float left, float right, float bottom, float top,
                                         float near, float far);
@@ -187,34 +187,44 @@ public class Matrix4x4 {
     public native float get(int i, int j);
 
     /**
-     * Add matrix.
+     * Add matrix4x4 by each element from matrix4x4
+     * v1.
      *
-     * @param v1
-     * @return
+     * @param v1 valid matrix.
+     * @return Added matrix.
      */
     public native Matrix4x4 add(final Matrix4x4 v1);
 
     /**
-     * @param v1
-     * @return
+     * Subtract matrix4x4 by each element from
+     * matrix4x4 v1.
+     *
+     * @param v1 valid matrix4x4.
+     * @return subbed matrix.
      */
     public native Matrix4x4 sub(final Matrix4x4 v1);
 
     /**
-     * @param f1
-     * @return
+     * Multiple matrix by another matrix.
+     *
+     * @param f1 matrix4x4.
+     * @return product result.
      */
     public native Matrix4x4 mul(Matrix4x4 f1);
 
     /**
-     * @param f
-     * @return
+     * Multiple matrix by a scalar.
+     *
+     * @param f scalar.
+     * @return product result.
      */
     public native Matrix4x4 mul(float f);
 
     /**
-     * @param f1
-     * @return
+     * Multiple matrix by a 4 component vector.
+     *
+     * @param f1 vector4 object.
+     * @return product result.
      */
     public native Vector4 mul(final Vector4 f1);
 
