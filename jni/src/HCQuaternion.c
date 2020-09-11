@@ -18,7 +18,7 @@
 */
 #include"org_jhpm_Quaternion.h"
 #include"org_jhpm_helper.h"
-#include<hpm/hpm.h>
+#include<hpm.h>
 
 JNIEXPORT void JNICALL Java_org_jhpm_Quaternion_set
   (JNIEnv *env, jobject o, jfloat w, jfloat x, jfloat y, jfloat z){

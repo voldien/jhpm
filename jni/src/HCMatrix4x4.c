@@ -18,8 +18,8 @@
 */
 #include"org_jhpm_Matrix4x4.h"
 #include"org_jhpm_helper.h"
-#include<hpm/hpm.h>
-#include<hpm/hpmmath.h>
+#include<hpm.h>
+#include<hpmmath.h>
 #include<assert.h>
 
 JNIEXPORT jboolean JNICALL Java_org_jhpm_Matrix4x4_isIdentity

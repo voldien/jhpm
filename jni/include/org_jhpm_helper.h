@@ -20,7 +20,7 @@
 #define _ORG_JHPM_HELPER_H_ 1
 #include<jni.h>
 #include<assert.h>
-#include<hpm/hpm.h>
+#include<hpm.h>
 
 /**
  *  Forward function declaration.

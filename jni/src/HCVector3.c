@@ -18,7 +18,7 @@
 */
 #include"org_jhpm_Vector3.h"
 #include"org_jhpm_helper.h"
-#include<hpm/hpm.h>
+#include<hpm.h>
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector3_negate
   (JNIEnv *env, jobject o){
