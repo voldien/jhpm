@@ -22,8 +22,6 @@ FIND_PACKAGE(Java 11 REQUIRED)
 # Needs UseJava module in order to work.
 INCLUDE(UseJava)
 
-#INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS})
-
 # Set java compiler options.
 SET(CMAKE_JAVA_COMPILE_FLAGS "-source" "1.8" "-target" "1.8")
 SET(CMAKE_JNI_TARGET TRUE)
@@ -37,7 +35,6 @@ FILE (GLOB JAVA_SOURCE_FILES ${JAVA_SOURCE_DIRECTORY}/*.java)
 # Set Java target
 ADD_JAR(jhpm ${JAVA_SOURCE_FILES}
 	OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib
-#	OUTPUT_NAME jhpm.jar
 	VERSION 1.8
 	GENERATE_NATIVE_HEADERS jhpm-native)
 
@@ -49,28 +46,8 @@ GET_TARGET_PROPERTY(_classDir jhpm CLASSDIR)
 MESSAGE(STATUS "Jar file ${_jarFile}")
 MESSAGE(STATUS "Class compiled to ${_classDir}")
 
-# Generate C/C++ header only if the target java library exists.
-# IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/lib/jhpm.jar )
-# 	SET(JAVA_SOURCE_CLASSSES org.jhpm.Vector2 org.jhpm.Vector3 org.jhpm.Vector4 org.jhpm.Quaternion
-# 				org.jhpm.Matrix4x4 org.jhpm.Hpm )
-
-# 	MESSAGE(STATUS "Generating JNI C/C++ Headers.")
-# 	create_javah(GENERATED_FILES files_headers
-# 		CLASSES ${JAVA_SOURCE_CLASSSES}
-# 		CLASSPATH ${_jarFile}
-# 		OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/jni/include)
-
-# ENDIF()
-
 # JNI.
 ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/jni)
-
-# Temporarily solution!
-# IF( NOT JAVA_LIB_INSTALL_DIR)
-# 	IF( UNIX)
-# 		SET(JAVA_LIB_INSTALL_DIR /usr/share/java)
-# 	ENDIF()
-# ENDIF()
 
 #install_jar(target_name destination)
 INSTALL_JAR(jhpm DESTINATION ${LIB_INSTALL_DIR}/jhpm)

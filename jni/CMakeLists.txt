@@ -5,6 +5,8 @@ FIND_PACKAGE(JNI REQUIRED)
 
 # Build shared/dynamic library option
 OPTION(BUILD_SHARED_LIBS "Build package with shared libraries." ON)
+OPTION(BUILD_WITH_EXTERNAL_PROJECT "Enable external project build." ON)
+OPTION(BUILD_WITH_INSTALL "" ON )
 IF(NOT BUILD_SHARED_LIBS)
 	SET(CMAKE_EXE_LINKER_FLAGS "-static")
 	SET(LINK_SEARCH_START_STATIC TRUE)
@@ -41,8 +43,59 @@ ELSEIF(MSVC)
 	ADD_DEFINITIONS(/MP)
 ENDIF()
 
+FIND_PACKAGE(Git)
+IF(GIT_FOUND)
+	MESSAGE(STATUS "git found: ${GIT_EXECUTABLE} -- ${GIT_VERSION_STRING}")
+ENDIF()
+IF(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+	# Update submodules as needed
+	OPTION(GIT_SUBMODULE "Check submodules during build" ON)
+	IF(GIT_SUBMODULE)
+		MESSAGE(STATUS "Submodule update")
+		EXECUTE_PROCESS(COMMAND ${GIT_EXECUTABLE} submodule update --init
+						WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+						RESULT_VARIABLE GIT_SUBMOD_RESULT)
+		IF(NOT GIT_SUBMOD_RESULT EQUAL "0")
+			MESSAGE(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+		ENDIF()
+	ENDIF()
+ELSE()
+
+ENDIF()
+
+IF (BUILD_WITH_EXTERNAL_PROJECT)
+	INCLUDE(ExternalProject)
+	IF (NOT GIT_FOUND)
+		MESSAGE(FATAL_ERROR "Git is required in order to fetch the external project hpm.")
+	ENDIF ()
+
+	SET_PROPERTY(DIRECTORY PROPERTY EP_STEP_TARGETS build)
+
+	# Download the hpm library.
+	SET(HPM_ROOT ${CMAKE_CURRENT_BINARY_DIR}/deps/hpm)
+	SET(HPM_LIB_DIR ${HPM_ROOT}/lib)
+	SET(HPM_INCLUDE_DIR ${HPM_ROOT}/include)
+	ExternalProject_Add(hpm-external
+			URL ${PROJECT_SOURCE_DIR}/extern/hpm
+			SOURCE_DIR ${HPM_ROOT}/src/hpm
+			BINARY_DIR ${HPM_ROOT}/src/hpm-build
+			INSTALL_DIR ${HPM_ROOT}
+			CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_TEST=OFF
+			STEP_TARGETS build
+			COMMENT "Building Hpm."
+			LOG_DOWNLOAD ON)
+	# Include HPM headers.
+	ADD_LIBRARY(hpm SHARED IMPORTED)
+	ADD_DEPENDENCIES(hpm hpm-external)
+	SET_TARGET_PROPERTIES(hpm PROPERTIES
+			IMPORTED_LOCATION ${HPM_LIB_DIR}/libhpm.so
+			INTERFACE_LINK_LIBRARIES ${HPM_LIB_DIR}/libhpm.so
+				INTERFACE_INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/extern/hpm/include)
+	SET(HPM_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/extern/hpm/include")
+ENDIF ()
+
 # Source files.
-FILE (GLOB headers ${CMAKE_CURRENT_SOURCE_DIR}/include/*h)
+FILE (GLOB headers ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
 FILE (GLOB jnisrc ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c )
 
 # Add library targets and linking targets
