@@ -16,28 +16,14 @@ ADD_DEFINITIONS(-DHPM_REVISION_VERSION=${HPM_VERSION_REVISION})
 ADD_DEFINITIONS(-DHPM_STATE_VERSION=${HPM_VERSION_STATE})
 ADD_DEFINITIONS(-DHPM_STR_VERSION="${HPM_VERSION}")
 
-# Check build target.
-IF (CMAKE_BUILD_TYPE STREQUAL "Release")
-	MESSAGE(STATUS "Compile for release.")
-	ADD_DEFINITIONS(-DNDEBUG -O2)
-	SET(CMAKE_RELEASE TRUE)
-ELSEIF( CMAKE_BUILD_TYPE STREQUAL "Debug")
-	MESSAGE(STATUS "Compile for debug.")
-	ADD_DEFINITIONS(-D_DEBUG)
-	ADD_DEFINITIONS(-g3)
-	SET(CMAKE_DEBUG TRUE)
-ENDIF()
-
 # Check if package exist in order to continue.
 FIND_PACKAGE(JNI REQUIRED)
-FIND_PACKAGE(Java REQUIRED)
-
+FIND_PACKAGE(Java 11 REQUIRED)
 # Needs UseJava module in order to work.
 INCLUDE(UseJava)
-INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS})
 
 # Set java compiler options.
-SET(CMAKE_JAVA_COMPILE_FLAGS "-source" "1.6" "-target" "1.6")
+SET(CMAKE_JAVA_COMPILE_FLAGS "-source" "1.8" "-target" "1.8")
 SET(CMAKE_JNI_TARGET TRUE)
 SET(JAVA_SOURCE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/org/jhpm)
 SET(PACKAGE_NAME "org.jhpm")
@@ -47,42 +33,25 @@ SET(CMAKE_JAR_CLASSES_PREFIX org/jhpm)
 FILE (GLOB JAVA_SOURCE_FILES ${JAVA_SOURCE_DIRECTORY}/*.java)
 
 # Set Java target
-add_jar(jhpm ${JAVA_SOURCE_FILES}
+ADD_JAR(jhpm ${JAVA_SOURCE_FILES}
 	OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib
-	VERSION 1.6)
+	VERSION 1.8
+	GENERATE_NATIVE_HEADERS jhpm-native)
 
 # Get property of the jhpm.
-get_target_property(_jarFile jhpm JAR_FILE)
-get_target_property(_classDir jhpm CLASSDIR)
+GET_TARGET_PROPERTY(_jarFile jhpm JAR_FILE)
+GET_TARGET_PROPERTY(_classDir jhpm CLASSDIR)
 
 # Print properties.
 MESSAGE(STATUS "Jar file ${_jarFile}")
 MESSAGE(STATUS "Class compiled to ${_classDir}")
 
-# Generate C/C++ header only if the target java library exists.
-IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/lib/jhpm.jar )
-	SET(JAVA_SOURCE_CLASSSES org.jhpm.Vector2 org.jhpm.Vector3 org.jhpm.Vector4 org.jhpm.Quaternion
-				org.jhpm.Matrix4x4 org.jhpm.Hpm )
-
-	MESSAGE(STATUS "Generating JNI C/C++ Headers.")
-	create_javah(GENERATED_FILES files_headers
-		CLASSES ${JAVA_SOURCE_CLASSSES}
-		CLASSPATH ${_jarFile}
-		OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/jni/include)
-	# JNI.
-	ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/jni)
-ENDIF()
-
-# Temporarily solution!
-IF( NOT JAVA_LIB_INSTALL_DIR)
-	IF( UNIX)
-		SET(JAVA_LIB_INSTALL_DIR /usr/share/java)
-	ENDIF()
-ENDIF()
+# JNI.
+ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/jni)
 
 #install_jar(target_name destination)
-install_jar(jhpm DESTINATION ${LIB_INSTALL_DIR}/jhpm)
-install_jni_symlink(jhpm DESTINATION ${JAVA_LIB_INSTALL_DIR})
+INSTALL_JAR(jhpm DESTINATION ${LIB_INSTALL_DIR}/jhpm)
+#INSTALL_JNI_SYMLINK(jhpm DESTINATION ${JAVA_LIB_INSTALL_DIR})
 
 # Create html documenation for the Java API for this library.
 IF( DOCS )

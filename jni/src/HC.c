@@ -17,7 +17,7 @@
 
 */
 #include"org_jhpm_Hpm.h"
-#include<hpm/hpm.h>
+#include<hpm.h>
 #include"org_jhpm_helper.h"
 
 

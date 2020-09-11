@@ -17,7 +17,7 @@
 
 */
 #include"org_jhpm_Vector2.h"
-#include<hpm/hpm.h>
+#include<hpm.h>
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Vector2_negate
   (JNIEnv *env, jobject o){

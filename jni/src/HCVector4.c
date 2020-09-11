@@ -18,7 +18,7 @@
 */
 #include"org_jhpm_Vector4.h"
 #include"org_jhpm_helper.h"
-#include<hpm/hpm.h>
+#include<hpm.h>
 
 
 JNIEXPORT jfloat JNICALL Java_org_jhpm_Vector4_length
