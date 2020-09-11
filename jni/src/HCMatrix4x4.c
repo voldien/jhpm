@@ -413,7 +413,27 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_orth
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_biasMatrix
   (JNIEnv *env, jclass c){
-	(*env)->ThrowNew(env, (*env)->FindClass(env, "java/lang/UnsupportedOperationException"), "Not implemented");
+
+	jfloatArray arr;
+	jobject o = hpmjni_create_object_instance(env, c);
+	jfloat* e = hpmjni_get_float_array_pointer_reference(env, o, &arr);
+
+	const hpmvec4f row0 = {0};
+	const hpmvec4f row1 = {0};
+	const hpmvec4f row2 = {0};
+	const hpmvec4f row3 = {0};
+
+	const hpmvec4x4f_t bias = {
+			{ 0.5f, 0.0f, 0.0f, 0.0f },
+			{ 0.0f, 0.5f, 0.0f, 0.0f },
+			{ 0.0f, 0.0f, 0.5f, 0.0f },
+			{ 0.5f, 0.5f, 0.5f, 1.0f },
+	};
+
+	hpm_mat4x4_copyfv(e, bias);
+
+	hpmjni_release_float_array_pointer_reference(env, arr, e);
+	return o;
 }
 
 JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_identity
