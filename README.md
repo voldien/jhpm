@@ -5,7 +5,7 @@
 
 jhpm ( Java hpm) is a wrapper library of the hpm library for using it in the Java languages.
 
-The project consists of declared java classes and the JNI code for implementation the mapping between the c code and the java methods.
+The project consists of declared java classes and the JNI code for implementing of the mapping between the c code and the java methods.
 
 # Motivation #
 
@@ -13,9 +13,9 @@ The project was created in order create Java interface library for utilizing the
 
 # Installation #
 
-The project uses the *CMake* in order add compatibility for cross platform make files.
+The project uses the *CMake* in order to add compatibility for cross-platform make files.
 ## Linux ##
-The following commad covers how to compile and install the jhpm library on Linux throught the command line.
+The following command covers how to compile and install the npm library on Linux through the command line.
 ```
 mkdir build
 cd build
@@ -24,12 +24,11 @@ make
 ```
 
 ## Dependencies ##
-
+The library depends on the hpm library and the java development kit.
 ```bash
 sudo apt install default-jdk
 ```
 
 # License #
-
 This project is licensed under the GPL+3 License - see the [LICENSE](LICENSE) file for details.
 
