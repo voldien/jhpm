@@ -430,7 +430,7 @@ JNIEXPORT jobject JNICALL Java_org_jhpm_Matrix4x4_biasMatrix
 			{ 0.5f, 0.5f, 0.5f, 1.0f },
 	};
 
-	hpm_mat4x4_copyfv(e, bias);
+	hpm_mat4x4_copyfv((hpmvec4x4fp_t*)e, bias);
 
 	hpmjni_release_float_array_pointer_reference(env, arr, e);
 	return o;

@@ -5,11 +5,11 @@
 
 jhpm ( Java hpm) is a wrapper library of the hpm library for using it in the Java languages.
 
-The project consists of declared java classes and the JNI code for implementing of the mapping between the c code and the java methods.
+The project consists of declared java classes and the JNI code for implementing the mapping between the c code and the java methods.
 
 # Motivation #
 
-The project was created in order create Java interface library for utilizing the hpm library. Where the hpm ( high performance matrices) library uses the most approiated SIMD extension available on the system, in order to increase the performance per math operation. See more details at [hpm](https://github.com/voldien/hpm).
+The project was created in order to create a Java interface library for utilizing the hpm library. Where the hpm (high-performance matrices) library uses the most appropriated SIMD extension available on the system, in order to increase the performance per math operation. See more details at [hpm](https://github.com/voldien/hpm).
 
 # Installation #
 
